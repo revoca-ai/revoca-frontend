@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revoca AI — Wireframe v3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    color: #888;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATED BORDER FRAME ── */
+  .border-frame {
+    position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  }
+  /* Top border — animated gradient line */
+  .border-frame::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #333, transparent);
+    background-size: 200% 100%;
+    animation: border-slide 8s linear infinite;
+  }
+  /* Bottom border */
+  .border-frame::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #222, transparent);
+    background-size: 200% 100%;
+    animation: border-slide 8s linear infinite reverse;
+  }
+  @keyframes border-slide {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Left fixed sidebar */
+  .side-left {
+    position: fixed; bottom: 0; left: 40px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 20px; z-index: 50;
+  }
+  .side-left::after {
+    content: ''; width: 1px; height: 90px;
+    background: linear-gradient(to bottom, #222, transparent);
+  }
+  .side-left a {
+    color: #333; text-decoration: none; transition: color 0.2s;
+  }
+  .side-left a:hover { color: #fff; }
+  .side-left svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* Right fixed sidebar */
+  .side-right {
+    position: fixed; bottom: 0; right: 40px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; z-index: 50;
+  }
+  .side-right::after {
+    content: ''; width: 1px; height: 90px;
+    background: linear-gradient(to bottom, #222, transparent);
+  }
+  .side-right a {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #333; text-decoration: none; writing-mode: vertical-rl;
+    letter-spacing: 2px; transition: color 0.2s;
+  }
+  .side-right a:hover { color: #fff; }
+
+  /* Left/right animated vertical lines */
+  .vline-left, .vline-right {
+    position: fixed; top: 0; width: 1px; height: 100vh;
+    z-index: 49; pointer-events: none;
+  }
+  .vline-left { left: 40px; }
+  .vline-right { right: 40px; }
+  .vline-left::before, .vline-right::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 1px; height: 100%;
+    background: linear-gradient(180deg, transparent 0%, #111 30%, #111 70%, transparent 100%);
+  }
+  /* Animated dot traveling down the line */
+  .vline-left::after, .vline-right::after {
+    content: ''; position: absolute; left: -1px;
+    width: 3px; height: 40px;
+    background: linear-gradient(180deg, transparent, #333, transparent);
+    animation: dot-travel 6s ease-in-out infinite;
+  }
+  .vline-right::after { animation-delay: -3s; }
+  @keyframes dot-travel {
+    0%, 100% { top: -40px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100vh; opacity: 0; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 100px;
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100; background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #0a0a0a;
+  }
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 700; color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: #333; }
+  .nav-links {
+    display: flex; gap: 28px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+  .nav-links a { color: #555; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-num { color: #333; margin-right: 4px; }
+  .nav-cta {
+    border: 1px solid #333; padding: 8px 20px; border-radius: 4px;
+    color: #fff !important; transition: all 0.2s;
+  }
+  .nav-cta:hover { background: #111; }
+
+  /* ── CENTERED CONTENT WRAPPER ── */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: #333; margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
+  .hero h1 {
+    font-size: 56px; font-weight: 800; color: #fff;
+    line-height: 1.1; margin-bottom: 12px; letter-spacing: -2px;
+  }
+  .hero h2 {
+    font-size: 48px; font-weight: 800; color: #1a1a1a;
+    line-height: 1.1; margin-bottom: 28px; letter-spacing: -2px;
+  }
+  .hero p {
+    font-size: 15px; color: #555; max-width: 480px;
+    margin: 0 auto 36px; line-height: 1.8;
+  }
+  .hero-cta {
+    display: inline-block; border: 1px solid #333;
+    padding: 14px 36px; font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: #fff; border-radius: 4px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .hero-cta:hover { background: #0a0a0a; border-color: #555; }
+
+  /* ── SECTION ── */
+  section {
+    padding: 100px 0;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 48px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; color: #333;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700; color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .section-line {
+    flex: 1; height: 1px; background: #111; margin-left: 16px;
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  }
+  .pillar {
+    background: #050505; border: 1px solid #111; border-radius: 6px;
+    padding: 28px 24px; transition: border-color 0.3s;
+  }
+  .pillar:hover { border-color: #222; }
+  .pillar-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #333; margin-bottom: 14px;
+    letter-spacing: 2px;
+  }
+  .pillar h3 {
+    font-size: 15px; font-weight: 600; color: #ccc; margin-bottom: 10px;
+  }
+  .pillar p { font-size: 13px; color: #555; line-height: 1.7; }
+
+  /* ── PIPELINE ── */
+  .pipeline {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+  }
+  .pipeline-step {
+    text-align: center; flex: 1;
+    padding: 24px 20px;
+    border: 1px solid #111; border-radius: 6px;
+    background: #050505;
+  }
+  .pipeline-step h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: #bbb; margin-bottom: 8px;
+  }
+  .pipeline-step p { font-size: 12px; color: #444; }
+  .pipeline-arrow {
+    color: #1a1a1a; font-size: 18px; margin: 0 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── BOT SHOWCASE ── */
+  .bot-section { text-align: center; }
+  .bot-section h3 {
+    font-size: 20px; color: #ccc; margin-bottom: 12px; font-weight: 600;
+  }
+  .bot-section > p {
+    font-size: 14px; color: #555; max-width: 480px;
+    margin: 0 auto 20px; line-height: 1.7;
+  }
+  .bot-handle {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fff; background: #080808; border: 1px solid #151515;
+    padding: 3px 10px; border-radius: 3px; font-size: 14px;
+  }
+  .bot-status {
+    display: flex; justify-content: center; gap: 24px;
+    margin-bottom: 28px; font-size: 13px;
+  }
+  .badge {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+    margin-left: 6px; vertical-align: middle;
+  }
+  .badge-live { background: #060d06; color: #3a6b3a; border: 1px solid #142814; }
+  .badge-soon { background: #0d0d06; color: #6b6b3a; border: 1px solid #28281a; }
+
+  .bot-features {
+    list-style: none; padding: 0; display: inline-block; text-align: left;
+    margin-bottom: 28px;
+  }
+  .bot-features li {
+    font-size: 13px; color: #666; margin-bottom: 8px;
+    padding-left: 16px; position: relative;
+  }
+  .bot-features li::before {
+    content: "\25B9"; position: absolute; left: 0; color: #333;
+  }
+
+  .bot-mock {
+    max-width: 520px; margin: 0 auto;
+    background: #030303; border: 1px solid #111;
+    border-radius: 6px; padding: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; line-height: 1.8; text-align: left;
+  }
+  .bot-mock .channel { color: #222; margin-bottom: 14px; font-size: 11px; }
+  .bot-mock .user { color: #555; font-weight: 500; }
+  .bot-mock .bot-name { color: #ddd; font-weight: 500; }
+  .bot-mock .msg { color: #444; }
+  .bot-mock .disclosure {
+    font-size: 10px; color: #222; font-style: italic; margin-top: 6px;
+  }
+
+  /* ── CONNECTORS ── */
+  .connectors-desc {
+    text-align: center; color: #444; margin-bottom: 36px; font-size: 14px;
+  }
+  .connectors {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+  }
+  .connector { text-align: center; width: 80px; }
+  .connector-icon {
+    width: 52px; height: 52px; border: 1px solid #111;
+    border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 8px;
+    background: #050505; transition: border-color 0.2s;
+  }
+  .connector:hover .connector-icon { border-color: #222; }
+  .connector-icon svg { width: 20px; height: 20px; fill: #444; }
+  .connector-name {
+    font-size: 11px; color: #444;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    text-align: center; padding: 100px 0;
+  }
+  .final-cta .section-num { display: block; margin-bottom: 16px; }
+  .final-cta h2 {
+    font-size: 36px; font-weight: 700; color: #fff;
+    margin-bottom: 16px; letter-spacing: -1px;
+  }
+  .final-cta p {
+    font-size: 14px; color: #444; max-width: 420px;
+    margin: 0 auto 32px; line-height: 1.7;
+  }
+  .final-cta a {
+    display: inline-block; border: 1px solid #333;
+    padding: 14px 36px; font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: #fff; border-radius: 4px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .final-cta a:hover { background: #0a0a0a; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #1a1a1a;
+    border-top: 1px solid #080808;
+  }
+
+  /* ── ANIM NOTE ── */
+  .anim-note {
+    max-width: 720px; margin: 0 auto 60px;
+    padding: 20px 24px;
+    border: 1px dashed #151515; border-radius: 6px;
+    font-size: 12px; color: #333;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .anim-note strong { color: #555; }
+</style>
+</head>
+<body>
+
+<!-- ANIMATED BORDER FRAME -->
+<div class="border-frame"></div>
+<div class="vline-left"></div>
+<div class="vline-right"></div>
+
+<!-- FIXED SIDE ELEMENTS -->
+<div class="side-left">
+  <a href="#" aria-label="GitHub">
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+  </a>
+  <a href="#" aria-label="Twitter">
+    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
+</div>
+
+<div class="side-right">
+  <a href="mailto:hello@revoca.ai">hello@revoca.ai</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">revoca<span>.ai</span></div>
+  <div class="nav-links">
+    <a href="#"><span class="nav-num">01.</span> About</a>
+    <a href="#"><span class="nav-num">02.</span> How it works</a>
+    <a href="#"><span class="nav-num">03.</span> Integrations</a>
+    <a class="nav-cta" href="#">Book a Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="content">
+    <div class="hero-label">// the context layer for enterprises</div>
+    <h1>Your devs go offline.</h1>
+    <h2>Revoca keeps them present.</h2>
+    <p>
+      A living context graph of your team's decisions, reasoning, and expertise.
+      When someone's away, Revoca responds in their voice, backed by real decision traces.
+    </p>
+    <a class="hero-cta" href="#">Book a Call &rarr;</a>
+  </div>
+</div>
+
+<!-- SECTION 01 -->
+<section>
+  <div class="content">
+    <div class="section-header">
+      <span class="section-num">01.</span>
+      <span class="section-title">What Revoca Does</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">[ ONBOARD ]</div>
+        <h3>Dev Onboarding</h3>
+        <p>New devs ramp up in days, not months. Revoca surfaces past decisions, architectural context, and tribal knowledge from your existing tools.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">[ SUPPORT ]</div>
+        <h3>24/7 Customer Support</h3>
+        <p>Your team's expertise, available around the clock. The bot responds in your team members' voice, backed by their actual decision history.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">[ CONTEXT ]</div>
+        <h3>Never Out of Office</h3>
+        <p>A context graph of each employee's decisions and reasoning. Your team never loses momentum, even when key people are offline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02 -->
+<section>
+  <div class="content">
+    <div class="section-header">
+      <span class="section-num">02.</span>
+      <span class="section-title">How It Works</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <h4>connect</h4>
+        <p>Link your GitHub, Docs, Discord, Slack, Telegram</p>
+      </div>
+      <div class="pipeline-arrow">---&gt;</div>
+      <div class="pipeline-step">
+        <h4>ingest</h4>
+        <p>Build decision traces and context graphs per member</p>
+      </div>
+      <div class="pipeline-arrow">---&gt;</div>
+      <div class="pipeline-step">
+        <h4>respond</h4>
+        <p>AI replies as your team in company chats, 24/7</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 -->
+<section>
+  <div class="content">
+    <div class="section-header">
+      <span class="section-num">03.</span>
+      <span class="section-title">Meet the Bots</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="bot-section">
+      <h3><span class="bot-handle">@revoca-ai</span></h3>
+      <p>
+        Add Revoca to your team's channels. It learns each member's voice,
+        reasoning patterns, and decision history, then responds as them when they're away.
+      </p>
+      <div class="bot-status">
+        <span>Telegram Bot <span class="badge badge-live">LIVE</span></span>
+        <span>Discord Bot <span class="badge badge-soon">COMING SOON</span></span>
+      </div>
+      <ul class="bot-features">
+        <li>Persona-based replies in each member's voice</li>
+        <li>Backed by real decision traces, not hallucinations</li>
+        <li>Clearly disclosed as AI, transparent by design</li>
+        <li>Per-channel routing to different team members</li>
+      </ul>
+      <div class="bot-mock">
+        <div class="channel"># engineering</div>
+        <div style="margin-bottom: 14px;">
+          <span class="user">dev_jane:</span>
+          <span class="msg"> @revoca-ai why did we choose PostgreSQL over MongoDB for the auth service?</span>
+        </div>
+        <div>
+          <span class="bot-name">revoca-ai:</span>
+          <span class="msg"> We went with Postgres because we needed ACID transactions for the session store. Alex discussed this in the arch review on March 2nd. The key concern was data consistency during concurrent session invalidations.</span>
+        </div>
+        <div class="disclosure">AI reply, voice: alex_lead</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04 -->
+<section>
+  <div class="content">
+    <div class="section-header">
+      <span class="section-num">04.</span>
+      <span class="section-title">Integrations</span>
+      <div class="section-line"></div>
+    </div>
+    <p class="connectors-desc">Connects where your team already works.</p>
+    <div class="connectors">
+      <div class="connector">
+        <div class="connector-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </div>
+        <div class="connector-name">GitHub</div>
+      </div>
+      <div class="connector">
+        <div class="connector-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+        </div>
+        <div class="connector-name">Docs</div>
+      </div>
+      <div class="connector">
+        <div class="connector-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+        </div>
+        <div class="connector-name">Discord</div>
+      </div>
+      <div class="connector">
+        <div class="connector-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        </div>
+        <div class="connector-name">Telegram</div>
+      </div>
+      <div class="connector">
+        <div class="connector-icon">
+          <svg viewBox="0 0 24 24"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.528 2.528 0 012.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 012.521 2.521 2.527 2.527 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 012.522-2.521A2.528 2.528 0 0124 8.834a2.528 2.528 0 01-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 01-2.523 2.521 2.527 2.527 0 01-2.52-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 012.523 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 01-2.52-2.523 2.526 2.526 0 012.52-2.52h6.313A2.527 2.527 0 0124 15.165a2.528 2.528 0 01-2.522 2.523h-6.313z"/></svg>
+        </div>
+        <div class="connector-name">Slack</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05: CTA -->
+<div class="content">
+  <div class="final-cta">
+    <span class="section-num">05. What's Next?</span>
+    <h2>Get In Touch</h2>
+    <p>
+      See how Revoca can turn your team's scattered knowledge into a living, always-on context layer.
+    </p>
+    <a href="#">Book a Call &rarr;</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>Built by Revoca AI</footer>
+
+<!-- DESIGN NOTES -->
+<div class="anim-note">
+  <strong>Design notes (this section won't be in final build):</strong><br><br>
+  <strong>Layout:</strong> All content centered at max-width 720px. Generous whitespace.<br>
+  <strong>Border animation:</strong> Fixed vertical lines on left/right edges with animated light dots traveling down. Top/bottom have sliding gradient lines. Creates a subtle frame around the entire viewport.<br>
+  <strong>Side elements:</strong> Left: social icons (GitHub, Twitter) with a vertical line to bottom. Right: email in vertical text with line to bottom. Same pattern as reference site.<br>
+  <strong>Scroll animations:</strong> Fade-up with Y-translate on each section entering viewport via Framer Motion.<br>
+  <strong>Bot mock:</strong> Typing animation for the response text.<br>
+  <strong>All animations:</strong> CSS + Framer Motion. Subtle, not distracting.
+</div>
+
+</body>
+</html>

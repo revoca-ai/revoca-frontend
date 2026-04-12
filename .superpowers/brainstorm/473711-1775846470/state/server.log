@@ -1,0 +1,8 @@
+{"type":"server-started","port":58978,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:58978","screen_dir":"/home/alpha/Desktop/lfg/landing-page/.superpowers/brainstorm/473711-1775846470/content","state_dir":"/home/alpha/Desktop/lfg/landing-page/.superpowers/brainstorm/473711-1775846470/state"}
+{"type":"screen-added","file":"/home/alpha/Desktop/lfg/landing-page/.superpowers/brainstorm/473711-1775846470/content/theme-options.html"}
+{"source":"user-event","type":"click","text":"ACCENT\n    \n      \n        revoca.ai\n        01. About   02. How it works\n      \n      \n        // the context layer for enterprises\n        Your devs go offline.\n        Revoca keeps them present.\n        A living context graph of your team's decisions, reasoning, and expertise.\n        Book a Call →\n      \n      \n        [ ONBOARD ]Dev Onboarding\n        [ SUPPORT ]24/7 Support\n        [ CONTEXT ]Never OOO\n      \n    \n    A. Black + Orange Bold, startup energy","choice":"a","id":null,"timestamp":1775846609674}
+{"type":"screen-added","file":"/home/alpha/Desktop/lfg/landing-page/.superpowers/brainstorm/473711-1775846470/content/logo-options.html"}
+{"source":"user-event","type":"click","text":"E\n    \n      > revoca.ai\n    \n    CLI cursor style","choice":"e","id":null,"timestamp":1775846737256}
+{"type":"screen-added","file":"/home/alpha/Desktop/lfg/landing-page/.superpowers/brainstorm/473711-1775846470/content/logo-e-variants.html"}
+{"source":"user-event","type":"click","text":"E2\n    \n      > revoca.ai\n    \n    dim dot, orange \"ai\" only","choice":"b","id":null,"timestamp":1775846807279}
+{"type":"server-stopped","reason":"idle timeout"}

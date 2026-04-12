@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revoca AI — Theme Options</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; color: #ccc; font-family: 'Inter', sans-serif; padding: 40px; }
+  h1 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 8px; text-align: center; }
+  .subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 48px; }
+
+  .themes { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; margin: 0 auto; }
+
+  .theme-card {
+    border-radius: 12px; overflow: hidden; cursor: pointer;
+    border: 2px solid transparent; transition: all 0.3s;
+    position: relative;
+  }
+  .theme-card:hover { transform: translateY(-2px); }
+  .theme-card.selected { border-color: #fff; }
+
+  .theme-label {
+    position: absolute; top: 12px; right: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 3px 10px; border-radius: 4px; z-index: 2;
+  }
+
+  .theme-preview {
+    padding: 32px 28px; min-height: 380px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  .tp-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    margin-bottom: 32px; padding-bottom: 12px;
+  }
+
+  .tp-hero { margin-bottom: 28px; }
+  .tp-hero .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-bottom: 10px; letter-spacing: 2px; }
+  .tp-hero h2 { font-size: 28px; font-weight: 800; line-height: 1.15; margin-bottom: 6px; letter-spacing: -1px; }
+  .tp-hero h3 { font-size: 24px; font-weight: 800; line-height: 1.15; margin-bottom: 12px; letter-spacing: -1px; }
+  .tp-hero p { font-size: 12px; line-height: 1.7; margin-bottom: 16px; max-width: 340px; }
+  .tp-cta {
+    display: inline-block; padding: 8px 20px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-decoration: none;
+  }
+
+  .tp-cards { display: flex; gap: 10px; }
+  .tp-card {
+    flex: 1; padding: 14px 12px; border-radius: 6px; font-size: 11px;
+  }
+  .tp-card h4 { font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-bottom: 4px; letter-spacing: 1px; }
+  .tp-card p { font-size: 10px; line-height: 1.5; }
+
+  .tp-badge {
+    display: inline-block; font-size: 9px; padding: 2px 6px;
+    border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+  }
+
+  .theme-name {
+    padding: 14px 20px; font-size: 15px; font-weight: 700;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .theme-desc { font-size: 11px; font-weight: 400; opacity: 0.6; }
+
+  /* ── THEME A: Black + Orange ── */
+  .theme-a .theme-preview { background: #0a0a0a; }
+  .theme-a .theme-label { background: #1a0f06; color: #e87a2a; border: 1px solid #2a1a0a; }
+  .theme-a .tp-nav { color: #555; border-bottom: 1px solid #161616; }
+  .theme-a .tp-nav strong { color: #eee; }
+  .theme-a .tp-nav .accent { color: #e87a2a; }
+  .theme-a .tp-hero .label { color: #e87a2a; }
+  .theme-a .tp-hero h2 { color: #f0f0f0; }
+  .theme-a .tp-hero h3 { color: #2a1a0a; }
+  .theme-a .tp-hero p { color: #666; }
+  .theme-a .tp-cta { background: #e87a2a; color: #000; font-weight: 600; }
+  .theme-a .tp-card { background: #0f0f0f; border: 1px solid #1a1a1a; }
+  .theme-a .tp-card h4 { color: #e87a2a; }
+  .theme-a .tp-card p { color: #555; }
+  .theme-a .theme-name { background: #0f0808; color: #e87a2a; }
+  .theme-a .tp-badge { background: #1a0f06; color: #e87a2a; border: 1px solid #2a1a0a; }
+
+  /* ── THEME B: Black + Emerald ── */
+  .theme-b .theme-preview { background: #050a08; }
+  .theme-b .theme-label { background: #061a10; color: #34d399; border: 1px solid #0a2a18; }
+  .theme-b .tp-nav { color: #445; border-bottom: 1px solid #0f1a14; }
+  .theme-b .tp-nav strong { color: #dde; }
+  .theme-b .tp-nav .accent { color: #34d399; }
+  .theme-b .tp-hero .label { color: #34d399; }
+  .theme-b .tp-hero h2 { color: #eef0ee; }
+  .theme-b .tp-hero h3 { color: #0a2a18; }
+  .theme-b .tp-hero p { color: #556; }
+  .theme-b .tp-cta { border: 1px solid #1a3a28; color: #34d399; }
+  .theme-b .tp-card { background: #080e0b; border: 1px solid #0f1a14; }
+  .theme-b .tp-card h4 { color: #34d399; }
+  .theme-b .tp-card p { color: #4a5a50; }
+  .theme-b .theme-name { background: #060e0a; color: #34d399; }
+  .theme-b .tp-badge { background: #061a10; color: #34d399; border: 1px solid #0a2a18; }
+
+  /* ── THEME C: Black + Ice Blue ── */
+  .theme-c .theme-preview { background: #050508; }
+  .theme-c .theme-label { background: #06101a; color: #60a5fa; border: 1px solid #0a1a2a; }
+  .theme-c .tp-nav { color: #445; border-bottom: 1px solid #0f1218; }
+  .theme-c .tp-nav strong { color: #dee; }
+  .theme-c .tp-nav .accent { color: #60a5fa; }
+  .theme-c .tp-hero .label { color: #60a5fa; }
+  .theme-c .tp-hero h2 { color: #eef0f4; }
+  .theme-c .tp-hero h3 { color: #0a1428; }
+  .theme-c .tp-hero p { color: #556; }
+  .theme-c .tp-cta { border: 1px solid #1a2a3a; color: #60a5fa; }
+  .theme-c .tp-card { background: #08080e; border: 1px solid #0f1218; }
+  .theme-c .tp-card h4 { color: #60a5fa; }
+  .theme-c .tp-card p { color: #4a4a5a; }
+  .theme-c .theme-name { background: #06080e; color: #60a5fa; }
+  .theme-c .tp-badge { background: #06101a; color: #60a5fa; border: 1px solid #0a1a2a; }
+
+  /* ── THEME D: Current (Monochrome) ── */
+  .theme-d .theme-preview { background: #050505; }
+  .theme-d .theme-label { background: #111; color: #888; border: 1px solid #222; }
+  .theme-d .tp-nav { color: #555; border-bottom: 1px solid #151515; }
+  .theme-d .tp-nav strong { color: #eee; }
+  .theme-d .tp-nav .accent { color: #eee; }
+  .theme-d .tp-hero .label { color: #444; }
+  .theme-d .tp-hero h2 { color: #f0f0f0; }
+  .theme-d .tp-hero h3 { color: #222; }
+  .theme-d .tp-hero p { color: #666; }
+  .theme-d .tp-cta { border: 1px solid #3a3a3a; color: #eee; }
+  .theme-d .tp-card { background: #0a0a0a; border: 1px solid #161616; }
+  .theme-d .tp-card h4 { color: #3a3a3a; }
+  .theme-d .tp-card p { color: #555; }
+  .theme-d .theme-name { background: #0a0a0a; color: #999; }
+  .theme-d .tp-badge { background: #111; color: #888; border: 1px solid #222; }
+
+  /* ── THEME E: Black + Warm Gold ── */
+  .theme-e .theme-preview { background: #080806; }
+  .theme-e .theme-label { background: #1a1808; color: #c9a94e; border: 1px solid #2a2410; }
+  .theme-e .tp-nav { color: #555; border-bottom: 1px solid #16150f; }
+  .theme-e .tp-nav strong { color: #eee; }
+  .theme-e .tp-nav .accent { color: #c9a94e; }
+  .theme-e .tp-hero .label { color: #c9a94e; }
+  .theme-e .tp-hero h2 { color: #f0eee6; }
+  .theme-e .tp-hero h3 { color: #1a1808; }
+  .theme-e .tp-hero p { color: #666; }
+  .theme-e .tp-cta { border: 1px solid #2a2410; color: #c9a94e; }
+  .theme-e .tp-card { background: #0c0c08; border: 1px solid #1a1808; }
+  .theme-e .tp-card h4 { color: #c9a94e; }
+  .theme-e .tp-card p { color: #555; }
+  .theme-e .theme-name { background: #0c0a06; color: #c9a94e; }
+  .theme-e .tp-badge { background: #1a1808; color: #c9a94e; border: 1px solid #2a2410; }
+
+  /* ── THEME F: Black + Crimson ── */
+  .theme-f .theme-preview { background: #080505; }
+  .theme-f .theme-label { background: #1a0808; color: #e05555; border: 1px solid #2a1010; }
+  .theme-f .tp-nav { color: #555; border-bottom: 1px solid #161010; }
+  .theme-f .tp-nav strong { color: #eee; }
+  .theme-f .tp-nav .accent { color: #e05555; }
+  .theme-f .tp-hero .label { color: #e05555; }
+  .theme-f .tp-hero h2 { color: #f0eeee; }
+  .theme-f .tp-hero h3 { color: #1a0808; }
+  .theme-f .tp-hero p { color: #666; }
+  .theme-f .tp-cta { border: 1px solid #2a1010; color: #e05555; }
+  .theme-f .tp-card { background: #0c0808; border: 1px solid #1a1010; }
+  .theme-f .tp-card h4 { color: #e05555; }
+  .theme-f .tp-card p { color: #555; }
+  .theme-f .theme-name { background: #0c0606; color: #e05555; }
+  .theme-f .tp-badge { background: #1a0808; color: #e05555; border: 1px solid #2a1010; }
+
+  .current-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; background: #222; color: #888; padding: 2px 8px; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Theme Options</h1>
+<p class="subtitle">Click to select. Each theme uses the same layout, just different accent color.</p>
+
+<div class="themes">
+
+  <!-- A: Black + Orange -->
+  <div class="theme-card theme-a" data-choice="a" onclick="toggleSelect(this)">
+    <span class="theme-label">ACCENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span><span class="accent">01.</span> About &nbsp; <span class="accent">02.</span> How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">A. Black + Orange <span class="theme-desc">Bold, startup energy</span></div>
+  </div>
+
+  <!-- B: Black + Emerald -->
+  <div class="theme-card theme-b" data-choice="b" onclick="toggleSelect(this)">
+    <span class="theme-label">ACCENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span><span class="accent">01.</span> About &nbsp; <span class="accent">02.</span> How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">B. Black + Emerald <span class="theme-desc">Terminal/matrix feel</span></div>
+  </div>
+
+  <!-- C: Black + Ice Blue -->
+  <div class="theme-card theme-c" data-choice="c" onclick="toggleSelect(this)">
+    <span class="theme-label">ACCENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span><span class="accent">01.</span> About &nbsp; <span class="accent">02.</span> How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">C. Black + Ice Blue <span class="theme-desc">Cool, enterprise-trust</span></div>
+  </div>
+
+  <!-- D: Current Monochrome -->
+  <div class="theme-card theme-d" data-choice="d" onclick="toggleSelect(this)">
+    <span class="theme-label">CURRENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span>01. About &nbsp; 02. How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">D. Monochrome <span class="current-tag">CURRENT</span> <span class="theme-desc">Minimal, no color</span></div>
+  </div>
+
+  <!-- E: Black + Warm Gold -->
+  <div class="theme-card theme-e" data-choice="e" onclick="toggleSelect(this)">
+    <span class="theme-label">ACCENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span><span class="accent">01.</span> About &nbsp; <span class="accent">02.</span> How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">E. Black + Gold <span class="theme-desc">Premium, luxury tech</span></div>
+  </div>
+
+  <!-- F: Black + Crimson -->
+  <div class="theme-card theme-f" data-choice="f" onclick="toggleSelect(this)">
+    <span class="theme-label">ACCENT</span>
+    <div class="theme-preview">
+      <div class="tp-nav">
+        <strong>revoca<span style="opacity:0.3">.ai</span></strong>
+        <span><span class="accent">01.</span> About &nbsp; <span class="accent">02.</span> How it works</span>
+      </div>
+      <div class="tp-hero">
+        <div class="label">// the context layer for enterprises</div>
+        <h2>Your devs go offline.</h2>
+        <h3>Revoca keeps them present.</h3>
+        <p>A living context graph of your team's decisions, reasoning, and expertise.</p>
+        <span class="tp-cta">Book a Call &rarr;</span>
+      </div>
+      <div class="tp-cards">
+        <div class="tp-card"><h4>[ ONBOARD ]</h4><p>Dev Onboarding</p></div>
+        <div class="tp-card"><h4>[ SUPPORT ]</h4><p>24/7 Support</p></div>
+        <div class="tp-card"><h4>[ CONTEXT ]</h4><p>Never OOO</p></div>
+      </div>
+    </div>
+    <div class="theme-name">F. Black + Crimson <span class="theme-desc">Sharp, aggressive</span></div>
+  </div>
+
+</div>
+
+</body>
+</html>
