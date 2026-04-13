@@ -10,16 +10,14 @@ export default function Footer() {
         </a>
 
         <p className="font-mono text-[10px] text-[#282828] text-center">
-          &copy; 2025 Revoca AI &mdash; The Context Layer for the Enterprise
+          &copy; 2025 Revoca AI &mdash; The Context Layer for Your Company
         </p>
 
         <a
-          href="https://cal.com/revoca-ai"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="mailto:heyrevoca@gmail.com"
           className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#e87a2a] transition-colors duration-200"
         >
-          Book a Call &rarr;
+          heyrevoca@gmail.com
         </a>
       </div>
     </footer>

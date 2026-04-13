@@ -54,7 +54,14 @@ export default function CTA() {
         </FadeIn>
 
         <FadeIn delay={0.25}>
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
+            <a
+              href="mailto:heyrevoca@gmail.com"
+              className="inline-flex items-center gap-2 font-mono text-[12px] text-[#444] hover:text-[#888] transition-colors duration-300 border-b border-[#222] hover:border-[#444] pb-px"
+            >
+              heyrevoca@gmail.com
+            </a>
+            <span className="hidden sm:block text-[#222] font-mono text-[12px]">·</span>
             <a
               href="https://www.notion.so/Revoca-The-Context-Layer-for-the-Companies-44007ae8743d468bad2a1c7fb7af6efb?source=copy_link"
               target="_blank"
