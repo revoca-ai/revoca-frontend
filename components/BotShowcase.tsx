@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import FadeIn from "./FadeIn";
 
 const botResponse =
-  "We went with Postgres because we needed ACID transactions for the session store. Alex discussed this in the arch review on March 2nd. The key concern was data consistency during concurrent session invalidations.";
+  "Sarah's last update (Jul 14): Stripe webhook handler is 80% complete. Blocked on PCI docs from legal — Chase has those. Refund flow deprioritized per Jordan's call on Jul 11. ETA: EOD Thursday.";
 
 function TypingText({ text, trigger }: { text: string; trigger: boolean }) {
   const [displayed, setDisplayed] = useState("");
@@ -18,15 +18,18 @@ function TypingText({ text, trigger }: { text: string; trigger: boolean }) {
       i++;
       setDisplayed(text.slice(0, i));
       if (i >= text.length) clearInterval(interval);
-    }, 18);
+    }, 16);
     return () => clearInterval(interval);
   }, [trigger, text]);
 
   return (
-    <span className="text-[#555]">
+    <span className="text-[#777]">
       {displayed}
       {trigger && displayed.length < text.length && (
-        <span className="inline-block w-px h-3 bg-[#666] ml-px" style={{ animation: "blink 0.8s infinite" }} />
+        <span
+          className="inline-block w-px h-3 bg-[#666] ml-px"
+          style={{ animation: "blink 0.8s infinite" }}
+        />
       )}
     </span>
   );
@@ -37,43 +40,39 @@ export default function BotShowcase() {
   const isInView = useInView(mockRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 lg:py-28 px-6">
-      <div className="max-w-[720px] mx-auto">
+    <section className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] flex flex-col justify-center">
+      <div className="max-w-[780px] mx-auto">
         <FadeIn>
-          <div className="flex items-center gap-3 mb-12">
-            <span className="font-mono text-sm text-[#e87a2a]">03.</span>
-            <span className="text-2xl font-bold text-[#e8e8e8] tracking-tight">
-              Meet the Bots
+          <div className="flex items-center gap-3 mb-16">
+            <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
+              See It in Action
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
           </div>
         </FadeIn>
 
         <div className="text-center">
-          <FadeIn>
-            <h3 className="text-xl font-semibold text-[#ddd] mb-3">
-              <span className="font-mono text-sm text-[#eee] bg-[#0e0e0e] border border-[#1e1e1e] px-2.5 py-1 rounded">
-                @revoca-ai
-              </span>
-            </h3>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <p className="text-sm text-[#666] max-w-[480px] mx-auto leading-[1.7] mb-5">
-              Add Revoca to your team&apos;s channels. It learns each member&apos;s voice,
-              reasoning patterns, and decision history, then responds as them when they&apos;re away.
+          <FadeIn delay={0.05}>
+            <p className="text-[14px] text-[#777] max-w-[480px] mx-auto leading-[1.85] mb-8">
+              Add Revoca to your channels. It learns each member&apos;s reasoning and decisions
+              — then responds as them when they&apos;re away.
             </p>
           </FadeIn>
 
-          <FadeIn delay={0.15}>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 mb-7 text-[13px]">
-              <a href="https://t.me/RevokaBetaBot" target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors">
+          <FadeIn delay={0.1}>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 mb-8 text-[13px]">
+              <a
+                href="https://t.me/RevokaBetaBot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#888] hover:text-white transition-colors"
+              >
                 Telegram Bot
-                <span className="inline-block text-[10px] px-2 py-0.5 rounded font-mono ml-1.5 bg-[#0a1a0a] text-[#4a8a4a] border border-[#1a3a1a] shadow-[0_0_8px_rgba(74,138,74,0.08)]">
+                <span className="inline-block text-[10px] px-2 py-0.5 rounded font-mono ml-1.5 bg-[#0a1a0a] text-[#4a8a4a] border border-[#1a3a1a]">
                   LIVE
                 </span>
               </a>
-              <span className="text-[#888]">
+              <span className="text-[#666]">
                 Discord Bot
                 <span className="inline-block text-[10px] px-2 py-0.5 rounded font-mono ml-1.5 bg-[#141408] text-[#8a8a4a] border border-[#2a2a1a]">
                   COMING SOON
@@ -82,49 +81,33 @@ export default function BotShowcase() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.2}>
-            <ul className="inline-block text-left list-none p-0 mb-7">
-              {[
-                "Persona-based replies in each member's voice",
-                "Backed by real decision traces, not hallucinations",
-                "Clearly disclosed as AI, transparent by design",
-                "Per-channel routing to different team members",
-              ].map((feature) => (
-                <li key={feature} className="text-[13px] text-[#777] mb-2 pl-4 relative before:content-['▹'] before:absolute before:left-0 before:text-[#444]">
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </FadeIn>
-
-          <FadeIn delay={0.25}>
+          <FadeIn delay={0.15}>
             <div
               ref={mockRef}
-              className="max-w-[520px] mx-auto bg-[#080808] border border-[#161616] rounded-md p-4 sm:p-6 font-mono text-[11px] sm:text-xs leading-[1.8] text-left overflow-hidden break-words"
+              className="max-w-[560px] mx-auto bg-[#060606] border border-[#161616] rounded-md p-6 sm:p-8 font-mono text-[12px] sm:text-[13px] leading-[1.9] text-left overflow-hidden break-words"
             >
-              <div className="text-[#2a2a2a] mb-3.5 text-[11px]"># engineering</div>
-              <div className="mb-3.5">
-                <span className="text-[#666] font-medium">dev_jane:</span>
-                <span className="text-[#555]">
-                  {" "}@revoca-ai why did we choose PostgreSQL over MongoDB for the auth service?
+              <div className="text-[#333] mb-5 text-[11px]"># engineering</div>
+
+              <div className="mb-5 pb-5 border-b border-[#111]">
+                <span className="text-[#e87a2a] font-medium">dev_mike:</span>
+                <span className="text-[#666]">
+                  {" "}@revoca-ai what&apos;s the status of the Q3 payments integration?
+                  Sarah is OOO.
                 </span>
               </div>
+
               <div>
                 <span className="text-[#ddd] font-medium">revoca-ai:</span>{" "}
                 <TypingText text={botResponse} trigger={isInView} />
               </div>
-              <div className="text-[10px] text-[#2a2a2a] italic mt-1.5">
-                AI reply, voice: alex_lead
+              <div className="text-[11px] text-[#2a2a2a] italic mt-3">
+                AI reply · voice: sarah_lead · source: github + slack
               </div>
             </div>
           </FadeIn>
 
-          {/* Try the Beta CTA */}
-          <FadeIn delay={0.3}>
+          <FadeIn delay={0.2}>
             <div className="mt-10 flex flex-col items-center gap-3">
-              <p className="font-mono text-[11px] text-[#e87a2a] tracking-[2px] uppercase">
-                Try the beta
-              </p>
               <a
                 href="https://t.me/RevokaBetaBot"
                 target="_blank"

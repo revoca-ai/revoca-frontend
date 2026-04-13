@@ -3,10 +3,25 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const steps = [
-  { title: "connect", desc: "Link your GitHub, Docs, Discord, Slack, Telegram" },
-  { title: "ingest", desc: "Build decision traces and context graphs per member" },
-  { title: "respond", desc: "AI replies as your team in company chats, 24/7" },
+const solutions = [
+  {
+    icon: "◈",
+    label: "Always On",
+    title: "24×7 Uninterrupted Workflows",
+    desc: "Query any past decision or task status instantly — even when the person is away. No one is ever blocked.",
+  },
+  {
+    icon: "◎",
+    label: "Reasons",
+    title: "Read Between the Lines",
+    desc: "Revoca doesn't just search — it reasons. It traces what was decided and why, across your entire company.",
+  },
+  {
+    icon: "◐",
+    label: "Secure",
+    title: "Isolated by Design",
+    desc: "One knowledge base, multiple agents with strictly isolated access. Zero data leakage — our absolute priority.",
+  },
 ];
 
 export default function Pipeline() {
@@ -14,66 +29,52 @@ export default function Pipeline() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="how-it-works" className="py-24 lg:py-28 px-6">
-      <div className="max-w-[720px] mx-auto" ref={ref}>
+    <section
+      id="how-it-works"
+      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+    >
+      <div className="max-w-[780px] mx-auto" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-16">
             <span className="font-mono text-sm text-[#e87a2a]">02.</span>
-            <span className="text-2xl font-bold text-[#e8e8e8] tracking-tight">
-              How It Works
+            <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
+              How Revoca Fixes This
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
           </div>
         </motion.div>
 
-        {/* Desktop: horizontal */}
-        <div className="hidden md:flex items-center justify-center">
-          {steps.map((step, i) => (
-            <div key={step.title} className="flex items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.2 }}
-                className="text-center flex-1 px-5 py-6 border border-[#161616] rounded-md bg-[#0a0a0a] hover:border-[#2a2a2a] transition-colors duration-300 min-w-[180px]"
-              >
-                <h4 className="font-mono text-[13px] text-[#ccc] mb-2">{step.title}</h4>
-                <p className="text-[12px] text-[#555]">{step.desc}</p>
-              </motion.div>
-              {i < steps.length - 1 && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.3, delay: 0.4 + i * 0.2 }}
-                  className="text-[#2a2a2a] font-mono text-sm mx-2.5 shrink-0"
-                >
-                  ---&gt;
-                </motion.span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile: vertical */}
-        <div className="flex md:hidden flex-col items-center gap-3">
-          {steps.map((step, i) => (
-            <div key={step.title} className="flex flex-col items-center w-full">
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.2 }}
-                className="text-center w-full px-5 py-6 border border-[#161616] rounded-md bg-[#0a0a0a]"
-              >
-                <h4 className="font-mono text-[13px] text-[#ccc] mb-2">{step.title}</h4>
-                <p className="text-[12px] text-[#555]">{step.desc}</p>
-              </motion.div>
-              {i < steps.length - 1 && (
-                <span className="text-[#2a2a2a] font-mono text-sm my-1">&darr;</span>
-              )}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {solutions.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55, delay: 0.15 + i * 0.15 }}
+              className="relative bg-[#060606] border border-[#e87a2a]/10 rounded-md p-8
+                         hover:border-[#e87a2a]/25 hover:shadow-[0_0_40px_rgba(232,122,42,0.06)]
+                         transition-all duration-400 overflow-hidden group"
+            >
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 200px 150px at 50% 0%, rgba(232,122,42,0.04) 0%, transparent 70%)",
+                }}
+              />
+              <div className="text-[#e87a2a] text-2xl mb-5 relative">{s.icon}</div>
+              <div className="font-mono text-[11px] text-[#e87a2a]/50 tracking-[2px] mb-3 uppercase relative">
+                {s.label}
+              </div>
+              <h3 className="text-[16px] font-semibold text-[#ccc] mb-4 leading-snug relative">
+                {s.title}
+              </h3>
+              <p className="text-[14px] text-[#777] leading-[1.85] relative">{s.desc}</p>
+            </motion.div>
           ))}
         </div>
       </div>

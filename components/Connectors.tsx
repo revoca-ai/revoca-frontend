@@ -27,12 +27,15 @@ const connectors = [
 
 export default function Connectors() {
   return (
-    <section id="integrations" className="py-24 lg:py-28 px-6">
+    <section
+      id="integrations"
+      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+    >
       <div className="max-w-[720px] mx-auto">
         <FadeIn>
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-16">
             <span className="font-mono text-sm text-[#e87a2a]">04.</span>
-            <span className="text-2xl font-bold text-[#e8e8e8] tracking-tight">
+            <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               Integrations
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
@@ -40,21 +43,21 @@ export default function Connectors() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <p className="text-center text-sm text-[#555] mb-9">
+          <p className="text-center text-[14px] text-[#777] mb-12">
             Connects where your team already works.
           </p>
         </FadeIn>
 
-        <div className="flex justify-center gap-6 sm:gap-8 lg:gap-10 flex-wrap">
+        <div className="flex justify-center gap-8 sm:gap-12 lg:gap-16 flex-wrap">
           {connectors.map((c, i) => (
             <FadeIn key={c.name} delay={0.15 + i * 0.05}>
               <div className="text-center w-20 group">
-                <div className="w-[52px] h-[52px] border border-[#161616] rounded-md flex items-center justify-center mx-auto mb-2 bg-[#0a0a0a] group-hover:border-[#2a2a2a] group-hover:shadow-[0_0_12px_rgba(255,255,255,0.02)] transition-all duration-300">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#555] group-hover:fill-[#999] transition-colors duration-300">
+                <div className="w-[60px] h-[60px] border border-[#161616] rounded-md flex items-center justify-center mx-auto mb-3 bg-[#0a0a0a] group-hover:border-[#2a2a2a] group-hover:shadow-[0_0_16px_rgba(255,255,255,0.03)] transition-all duration-300">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#666] group-hover:fill-[#aaa] transition-colors duration-300">
                     <path d={c.svg} />
                   </svg>
                 </div>
-                <span className="font-mono text-[11px] text-[#555]">{c.name}</span>
+                <span className="font-mono text-[12px] text-[#666]">{c.name}</span>
               </div>
             </FadeIn>
           ))}

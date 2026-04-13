@@ -30,10 +30,12 @@ body {
   50% { opacity: 0; }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling + scroll-snap */
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {
