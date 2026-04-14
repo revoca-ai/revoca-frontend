@@ -74,8 +74,8 @@ export default function BotShowcase() {
               </a>
               <span className="text-[#666]">
                 Discord Bot
-                <span className="inline-block text-[10px] px-2 py-0.5 rounded font-mono ml-1.5 bg-[#141408] text-[#8a8a4a] border border-[#2a2a1a]">
-                  COMING SOON
+                <span className="inline-block text-[10px] px-2 py-0.5 rounded font-mono ml-1.5 bg-[#0a1a0a] text-[#4a8a4a] border border-[#1a3a1a]">
+                  LIVE
                 </span>
               </span>
             </div>
