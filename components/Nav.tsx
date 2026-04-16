@@ -45,7 +45,7 @@ export default function Nav() {
             Full Vision ↗
           </a>
           <a
-            href="https://cal.com/revoca-ai"
+            href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] hover:bg-[#e87a2a]/10 hover:border-[#e87a2a]/50 transition-all duration-200"
@@ -102,7 +102,7 @@ export default function Nav() {
             Full Vision ↗
           </a>
           <a
-            href="https://cal.com/revoca-ai"
+            href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] text-center hover:bg-[#e87a2a]/10 transition-all mt-2"

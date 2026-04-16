@@ -36,7 +36,7 @@ export default function CTA() {
         <FadeIn delay={0.2}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="https://cal.com/revoca-ai"
+              href="https://calendly.com/revoca-ai/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#e87a2a] px-12 py-4 font-mono text-[13px] text-black font-bold rounded hover:bg-[#d06a1a] hover:shadow-[0_0_40px_rgba(232,122,42,0.25)] transition-all duration-300"
