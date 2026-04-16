@@ -28,7 +28,7 @@ export default function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
     >
       <div className="max-w-[780px] mx-auto" ref={ref}>
         <motion.div
@@ -43,7 +43,7 @@ export default function Roadmap() {
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
           </div>
-          <p className="font-mono text-[12px] text-[#444] mb-14 ml-9">
+          <p className="font-mono text-[12px] text-[#444] mb-5 sm:mb-10 ml-9">
             The pipeline. What we&apos;re building towards.
           </p>
         </motion.div>

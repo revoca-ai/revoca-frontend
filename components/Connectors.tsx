@@ -29,11 +29,11 @@ export default function Connectors() {
   return (
     <section
       id="integrations"
-      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
     >
       <div className="max-w-[720px] mx-auto">
         <FadeIn>
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-6 sm:mb-14">
             <span className="font-mono text-sm text-[#e87a2a]">04.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               Integrations
@@ -43,7 +43,7 @@ export default function Connectors() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <p className="text-center text-[14px] text-[#777] mb-12">
+          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-12">
             Connects where your team already works.
           </p>
         </FadeIn>

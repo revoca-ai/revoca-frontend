@@ -40,10 +40,10 @@ export default function BotShowcase() {
   const isInView = useInView(mockRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] flex flex-col justify-center">
+    <section className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center">
       <div className="max-w-[780px] mx-auto">
         <FadeIn>
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-5 sm:mb-12">
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               See It in Action
             </span>

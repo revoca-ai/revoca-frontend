@@ -9,11 +9,12 @@ import BotShowcase from "@/components/BotShowcase";
 import Connectors from "@/components/Connectors";
 import Roadmap from "@/components/Roadmap";
 import CTA from "@/components/CTA";
-import Footer from "@/components/Footer";
+import FullPageScroll from "@/components/FullPageScroll";
 
 export default function Home() {
   return (
     <>
+      <FullPageScroll />
       <BorderFrame />
       <SideElements />
       <Nav />
@@ -27,7 +28,6 @@ export default function Home() {
         <Roadmap />
         <CTA />
       </main>
-      <Footer />
     </>
   );
 }
