@@ -21,11 +21,11 @@ export default function Pillars() {
   return (
     <section
       id="about"
-      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
     >
       <div className="max-w-[780px] mx-auto">
         <FadeIn>
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-6 sm:mb-14">
             <span className="font-mono text-sm text-[#e87a2a]">01.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">The Problem</span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
@@ -35,7 +35,7 @@ export default function Pillars() {
         <div className="divide-y divide-[#0f0f0f]">
           {problems.map((p, i) => (
             <FadeIn key={p.title} delay={i * 0.12}>
-              <div className="grid grid-cols-[72px_1fr] gap-6 sm:gap-12 py-12 group">
+              <div className="grid grid-cols-[72px_1fr] gap-6 sm:gap-12 py-5 sm:py-10 group">
                 <span className="font-mono text-[52px] sm:text-[60px] font-bold text-[#111] leading-none pt-1 select-none group-hover:text-[#181818] transition-colors duration-500">
                   {String(i + 1).padStart(2, "0")}
                 </span>

@@ -15,7 +15,7 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section className="min-h-screen snap-start snap-always flex flex-col justify-center items-center text-center relative px-6">
+    <section className="h-screen snap-start snap-always overflow-hidden flex flex-col justify-center items-center text-center relative px-6">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{

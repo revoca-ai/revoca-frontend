@@ -30,12 +30,14 @@ body {
   50% { opacity: 0; }
 }
 
-/* Smooth scrolling + scroll-snap */
+/* Full-page JS-driven scroll — no CSS snap, JS owns all navigation */
 html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
+}
+
+body {
+  overflow: hidden;
 }
 
 body {

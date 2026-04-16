@@ -31,7 +31,7 @@ export default function Pipeline() {
   return (
     <section
       id="how-it-works"
-      className="min-h-screen snap-start snap-always py-28 lg:py-36 px-6 border-t border-[#0e0e0e] scroll-mt-20 flex flex-col justify-center"
+      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
     >
       <div className="max-w-[780px] mx-auto" ref={ref}>
         <motion.div
@@ -39,7 +39,7 @@ export default function Pipeline() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center gap-3 mb-16">
+          <div className="flex items-center gap-3 mb-6 sm:mb-14">
             <span className="font-mono text-sm text-[#e87a2a]">02.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               How Revoca Fixes This
@@ -55,7 +55,7 @@ export default function Pipeline() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.55, delay: 0.15 + i * 0.15 }}
-              className="relative bg-[#060606] border border-[#e87a2a]/10 rounded-md p-8
+              className="relative bg-[#060606] border border-[#e87a2a]/10 rounded-md p-5 sm:p-8
                          hover:border-[#e87a2a]/25 hover:shadow-[0_0_40px_rgba(232,122,42,0.06)]
                          transition-all duration-400 overflow-hidden group"
             >
