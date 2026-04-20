@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import FadeIn from "./FadeIn";
+import posthog from "posthog-js";
 
 const botResponse =
   "Sarah's last update (Jul 14): Stripe webhook handler is 80% complete. Blocked on PCI docs from legal — Chase has those. Refund flow deprioritized per Jordan's call on Jul 11. ETA: EOD Thursday.";
@@ -65,6 +66,7 @@ export default function BotShowcase() {
                 href="https://t.me/RevokaBetaBot"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => posthog.capture("bot_showcase_telegram_clicked", { location: "bot_showcase" })}
                 className="text-[#888] hover:text-white transition-colors"
               >
                 Telegram Bot
@@ -112,6 +114,7 @@ export default function BotShowcase() {
                 href="https://t.me/RevokaBetaBot"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => posthog.capture("bot_showcase_revoka_bot_clicked", { location: "bot_showcase" })}
                 className="inline-flex items-center gap-2 border border-[#e87a2a]/30 px-6 py-2.5 rounded font-mono text-[13px] text-[#e87a2a] hover:bg-[#e87a2a]/10 hover:border-[#e87a2a]/50 transition-all duration-300"
               >
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">

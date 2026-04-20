@@ -14,10 +14,10 @@ export default function Footer() {
         </p>
 
         <a
-          href="mailto:heyrevoca@gmail.com"
+          href="mailto:revoca.ai@gmail.com"
           className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#e87a2a] transition-colors duration-200"
         >
-          heyrevoca@gmail.com
+          revoca.ai@gmail.com
         </a>
       </div>
     </footer>

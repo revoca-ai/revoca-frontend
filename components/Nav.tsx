@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 
-const links: { num: string; label: string; href: string; external?: boolean }[] = [
-  { num: "01", label: "Problem", href: "#about" },
-  { num: "02", label: "Solution", href: "#how-it-works" },
-  { num: "03", label: "Capabilities", href: "#capabilities" },
-  { num: "04", label: "Integrations", href: "#integrations" },
-  { num: "05", label: "Roadmap", href: "#roadmap" },
+const links: { label: string; href: string; external?: boolean }[] = [
+  { label: "Problem", href: "#about" },
+  { label: "Solution", href: "#how-it-works" },
+  { label: "Capabilities", href: "#capabilities" },
+  { label: "Integrations", href: "#integrations" },
+  { label: "Roadmap", href: "#roadmap" },
 ];
 
 export default function Nav() {
@@ -32,7 +33,6 @@ export default function Nav() {
               {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-[#555] hover:text-[#ccc] transition-colors duration-200"
             >
-              <span className="text-[#e87a2a] mr-1">{link.num}.</span>
               {link.label}
             </a>
           ))}
@@ -40,6 +40,7 @@ export default function Nav() {
             href="https://www.notion.so/Revoca-The-Context-Layer-for-the-Companies-44007ae8743d468bad2a1c7fb7af6efb?source=copy_link"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("nav_full_vision_clicked", { location: "nav_desktop" })}
             className="text-[#333] hover:text-[#666] transition-colors duration-200"
           >
             Full Vision ↗
@@ -48,6 +49,7 @@ export default function Nav() {
             href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("nav_book_call_clicked", { location: "nav_desktop" })}
             className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] hover:bg-[#e87a2a]/10 hover:border-[#e87a2a]/50 transition-all duration-200"
           >
             Book a Call
@@ -56,7 +58,11 @@ export default function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            const next = !open;
+            setOpen(next);
+            posthog.capture("nav_mobile_menu_toggled", { opened: next });
+          }}
           className="lg:hidden flex flex-col gap-1.5 p-2"
           aria-label="Menu"
         >
@@ -89,7 +95,6 @@ export default function Nav() {
               {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-[#555] hover:text-[#ccc] transition-colors"
             >
-              <span className="text-[#e87a2a] mr-2">{link.num}.</span>
               {link.label}
             </a>
           ))}
@@ -105,6 +110,7 @@ export default function Nav() {
             href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("nav_mobile_book_call_clicked", { location: "nav_mobile" })}
             className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] text-center hover:bg-[#e87a2a]/10 transition-all mt-2"
           >
             Book a Call

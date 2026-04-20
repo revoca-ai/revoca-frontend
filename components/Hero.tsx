@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import posthog from "posthog-js";
 
 
 const stagger = {
@@ -62,6 +63,7 @@ export default function Hero() {
             href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("hero_book_call_clicked", { location: "hero" })}
             className="inline-block bg-[#e87a2a] px-10 py-3.5 font-mono text-[13px] text-black font-bold rounded hover:bg-[#d06a1a] hover:shadow-[0_0_40px_rgba(232,122,42,0.3)] transition-all duration-300"
           >
             Book a Call &rarr;
@@ -70,6 +72,7 @@ export default function Hero() {
             href="https://t.me/RevokaBetaBot"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("hero_try_beta_clicked", { location: "hero" })}
             className="inline-block border border-[#1e1e1e] px-10 py-3.5 font-mono text-[13px] text-[#555] rounded hover:border-[#2e2e2e] hover:text-[#888] transition-all duration-300"
           >
             Try the Beta &rarr;

@@ -30,18 +30,23 @@ body {
   50% { opacity: 0; }
 }
 
-/* Full-page JS-driven scroll — no CSS snap, JS owns all navigation */
+/* Full-page JS-driven scroll — desktop only; mobile scrolls natively */
 html {
   overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-body {
-  overflow: hidden;
 }
 
 body {
   overflow-x: hidden;
+}
+
+@media (min-width: 1024px) {
+  html {
+    overflow-y: hidden;
+  }
+
+  body {
+    overflow-y: hidden;
+  }
 }
 
 /* Selection color */

@@ -13,6 +13,9 @@ export default function FullPageScroll() {
   const touchStartY = useRef(0);
 
   useEffect(() => {
+    // Only activate on laptop/desktop screens (≥1024px)
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
+
     const getSections = (): HTMLElement[] =>
       Array.from(document.querySelectorAll("main > section"));
 
@@ -37,16 +40,20 @@ export default function FullPageScroll() {
       isScrolling.current = true;
       currentIndex.current = index;
       all[index].scrollIntoView({ behavior: "smooth" });
-      // Release lock after animation (~800 ms is enough for same-page smooth scroll)
+      // Release lock after animation — 1 s covers the smooth-scroll duration
+      // and the trackpad's initial momentum burst before deltas shrink below 15.
       setTimeout(() => {
         isScrolling.current = false;
-      }, 850);
+      }, 1000);
     };
 
     // --- Wheel (desktop) ---
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (isScrolling.current) return;
+      // Ignore tiny deltas — these are trackpad momentum tail-end events that
+      // arrive after the lock expires and would cause an unintended second jump.
+      if (Math.abs(e.deltaY) < 15) return;
       goTo(currentIndex.current + (e.deltaY > 0 ? 1 : -1));
     };
 

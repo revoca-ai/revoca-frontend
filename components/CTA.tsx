@@ -1,6 +1,7 @@
 "use client";
 
 import FadeIn from "./FadeIn";
+import posthog from "posthog-js";
 
 export default function CTA() {
   return (
@@ -39,6 +40,7 @@ export default function CTA() {
               href="https://calendly.com/revoca-ai/30min"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => posthog.capture("cta_book_call_clicked", { location: "cta_section" })}
               className="inline-block bg-[#e87a2a] px-12 py-4 font-mono text-[13px] text-black font-bold rounded hover:bg-[#d06a1a] hover:shadow-[0_0_40px_rgba(232,122,42,0.25)] transition-all duration-300"
             >
               Book a Call &rarr;
@@ -47,6 +49,7 @@ export default function CTA() {
               href="https://t.me/RevokaBetaBot"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => posthog.capture("cta_try_beta_clicked", { location: "cta_section" })}
               className="inline-block border border-[#1e1e1e] px-12 py-4 font-mono text-[13px] text-[#555] rounded hover:border-[#333] hover:text-[#999] transition-all duration-300"
             >
               Try the Beta &rarr;
@@ -57,16 +60,18 @@ export default function CTA() {
         <FadeIn delay={0.25}>
           <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-5">
             <a
-              href="mailto:heyrevoca@gmail.com"
+              href="mailto:revoca.ai@gmail.com"
+              onClick={() => posthog.capture("cta_email_clicked", { location: "cta_section" })}
               className="inline-flex items-center gap-2 font-mono text-[12px] text-[#444] hover:text-[#888] transition-colors duration-300 border-b border-[#222] hover:border-[#444] pb-px"
             >
-              heyrevoca@gmail.com
+              revoca.ai@gmail.com
             </a>
             <span className="hidden sm:block text-[#222] font-mono text-[12px]">·</span>
             <a
               href="https://www.notion.so/Revoca-The-Context-Layer-for-the-Companies-44007ae8743d468bad2a1c7fb7af6efb?source=copy_link"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => posthog.capture("cta_vision_deck_clicked", { location: "cta_section" })}
               className="inline-flex items-center gap-2 font-mono text-[12px] text-[#444] hover:text-[#888] transition-colors duration-300 border-b border-[#222] hover:border-[#444] pb-px"
             >
               Read the full vision deck ↗
@@ -103,10 +108,10 @@ export default function CTA() {
             &copy; 2025 Revoca AI &mdash; The Context Layer for Your Company
           </p>
           <a
-            href="mailto:heyrevoca@gmail.com"
+            href="mailto:revoca.ai@gmail.com"
             className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#e87a2a] transition-colors duration-200"
           >
-            heyrevoca@gmail.com
+            revoca.ai@gmail.com
           </a>
         </div>
       </footer>
