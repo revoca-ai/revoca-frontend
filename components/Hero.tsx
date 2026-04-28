@@ -51,8 +51,8 @@ export default function Hero() {
           variants={fadeUp}
           className="text-[15px] text-[#4a4a4a] max-w-[480px] mx-auto leading-[1.85] mb-10"
         >
-          Every decision, every reason, every context — captured, secured, and queryable.
-          Even when your team is offline.
+          Every decision, every reason, every context — captured and preserved.
+          So your company keeps moving, no matter what.
         </motion.p>
 
         <motion.div

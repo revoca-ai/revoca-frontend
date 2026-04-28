@@ -6,21 +6,21 @@ import { useRef } from "react";
 const solutions = [
   {
     icon: "◈",
-    label: "Always On",
-    title: "24×7 Uninterrupted Workflows",
-    desc: "Query any past decision or task status instantly — even when the person is away. No one is ever blocked.",
+    label: "Continuity",
+    title: "Your Company Keeps Moving",
+    desc: "When senior people are out, on leave, or gone — their context stays. No project stalls waiting for one person to return.",
   },
   {
     icon: "◎",
-    label: "Reasons",
-    title: "Read Between the Lines",
-    desc: "Revoca doesn't just search — it reasons. It traces what was decided and why, across your entire company.",
+    label: "Decision Intelligence",
+    title: "The Why, Not Just the What",
+    desc: "Revoca preserves the reasoning behind every decision. Managers and founders see what happened and why — the full picture, not just the outcome.",
   },
   {
     icon: "◐",
-    label: "Secure",
-    title: "Isolated by Design",
-    desc: "One knowledge base, multiple agents with strictly isolated access. Zero data leakage — our absolute priority.",
+    label: "Business Insights",
+    title: "Real-Time View Across Teams",
+    desc: "Leadership sees where things are stuck, what's at risk, and where momentum is building — across the entire company, in real time.",
   },
 ];
 

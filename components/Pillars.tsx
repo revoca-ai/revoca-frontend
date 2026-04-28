@@ -4,16 +4,16 @@ import FadeIn from "./FadeIn";
 
 const problems = [
   {
-    title: "People go offline. Teams stall.",
-    desc: "Critical decisions and task status locked behind one person. The rest of the company waits.",
+    title: "People go offline. Context disappears.",
+    desc: "A senior engineer leaves for two weeks and three projects stall. A PM quits and six months of reasoning walks out the door with them.",
   },
   {
-    title: "Knowledge lives nowhere.",
-    desc: "Scattered across Slack threads, Jira tickets, and PRs — disconnected, unstructured, and effectively gone.",
+    title: "The why gets buried.",
+    desc: "Decisions are made across Slack, Jira, GitHub, and calls — but the reasoning behind them is scattered, unstructured, and gone when you need it.",
   },
   {
-    title: "Onboarding never ends.",
-    desc: "Every new hire, the same slow process. Tribal knowledge evaporates every time someone leaves.",
+    title: "Leadership is flying blind.",
+    desc: "There's no real-time view of what's happening across teams. Where things are stuck, what's at risk — it's all locked in people's heads.",
   },
 ];
 

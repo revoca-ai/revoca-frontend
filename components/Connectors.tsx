@@ -43,7 +43,7 @@ export default function Connectors() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-12">
+          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-10">
             Connects where your team already works.
           </p>
         </FadeIn>
@@ -62,6 +62,24 @@ export default function Connectors() {
             </FadeIn>
           ))}
         </div>
+
+        <FadeIn delay={0.45}>
+          <div className="mt-8 text-center">
+            <div className="flex flex-wrap justify-center gap-2 mb-5">
+              {["Salesforce", "Jira", "Confluence", "Zoom", "Google Meet", "Linear", "Notion", "Email", "Loom", "Figma", "Intercom", "..."].map((name) => (
+                <span
+                  key={name}
+                  className="font-mono text-[11px] text-[#666] border border-[#222] rounded px-2.5 py-1 bg-[#0d0d0d] hover:text-[#999] hover:border-[#333] transition-colors duration-200"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+            <p className="text-[12px] text-[#555] max-w-[400px] mx-auto leading-[1.8]">
+              If your team works in it, Revoca will connect to it.
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
