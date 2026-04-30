@@ -3,10 +3,10 @@ export default function Footer() {
     <footer className="py-12 px-6 border-t border-[#111]">
       <div className="max-w-[780px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-5">
         <a href="#" className="font-mono text-sm font-bold tracking-tight">
-          <span className="text-[#e87a2a]">&gt;</span>{" "}
+          <span className="text-[#22d3ee]">&gt;</span>{" "}
           <span className="text-[#ddd]">revoca</span>
           <span className="text-[#333]">.</span>
-          <span className="text-[#e87a2a]">ai</span>
+          <span className="text-[#22d3ee]">ai</span>
         </a>
 
         <p className="font-mono text-[10px] text-[#282828] text-center">
@@ -15,7 +15,7 @@ export default function Footer() {
 
         <a
           href="mailto:revoca.ai@gmail.com"
-          className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#e87a2a] transition-colors duration-200"
+          className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#22d3ee] transition-colors duration-200"
         >
           revoca.ai@gmail.com
         </a>

@@ -29,12 +29,12 @@ export default function Connectors() {
   return (
     <section
       id="integrations"
-      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
     >
       <div className="max-w-[720px] mx-auto">
         <FadeIn>
           <div className="flex items-center gap-3 mb-6 sm:mb-14">
-            <span className="font-mono text-sm text-[#e87a2a]">04.</span>
+            <span className="font-mono text-sm text-[#22d3ee]">04.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               Integrations
             </span>
@@ -43,7 +43,7 @@ export default function Connectors() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-12">
+          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-10">
             Connects where your team already works.
           </p>
         </FadeIn>
@@ -62,6 +62,24 @@ export default function Connectors() {
             </FadeIn>
           ))}
         </div>
+
+        <FadeIn delay={0.45}>
+          <div className="mt-8 text-center">
+            <div className="flex flex-wrap justify-center gap-2 mb-5">
+              {["Salesforce", "Jira", "Confluence", "Zoom", "Google Meet", "Linear", "Notion", "Email", "Loom", "Figma", "Intercom", "..."].map((name) => (
+                <span
+                  key={name}
+                  className="font-mono text-[11px] text-[#666] border border-[#222] rounded px-2.5 py-1 bg-[#0d0d0d] hover:text-[#999] hover:border-[#333] transition-colors duration-200"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+            <p className="text-[12px] text-[#555] max-w-[400px] mx-auto leading-[1.8]">
+              If your team works in it, Revoca will connect to it.
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

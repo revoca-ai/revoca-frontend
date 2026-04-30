@@ -18,10 +18,10 @@ export default function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-[rgba(5,5,5,0.88)] backdrop-blur-xl border-b border-[#141414]">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-[100px] py-4 sm:py-5">
         <a href="#" className="font-mono text-sm sm:text-base font-bold tracking-tight">
-          <span className="text-[#e87a2a]">&gt;</span>{" "}
+          <span className="text-[#22d3ee]">&gt;</span>{" "}
           <span className="text-[#eee]">revoca</span>
           <span className="text-[#444]">.</span>
-          <span className="text-[#e87a2a]">ai</span>
+          <span className="text-[#22d3ee]">ai</span>
         </a>
 
         {/* Desktop links */}
@@ -50,7 +50,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => posthog.capture("nav_book_call_clicked", { location: "nav_desktop" })}
-            className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] hover:bg-[#e87a2a]/10 hover:border-[#e87a2a]/50 transition-all duration-200"
+            className="border border-[#22d3ee]/30 px-5 py-2 rounded text-[#22d3ee] hover:bg-[#22d3ee]/10 hover:border-[#22d3ee]/50 transition-all duration-200"
           >
             Book a Call
           </a>
@@ -111,7 +111,7 @@ export default function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => posthog.capture("nav_mobile_book_call_clicked", { location: "nav_mobile" })}
-            className="border border-[#e87a2a]/30 px-5 py-2 rounded text-[#e87a2a] text-center hover:bg-[#e87a2a]/10 transition-all mt-2"
+            className="border border-[#22d3ee]/30 px-5 py-2 rounded text-[#22d3ee] text-center hover:bg-[#22d3ee]/10 transition-all mt-2"
           >
             Book a Call
           </a>

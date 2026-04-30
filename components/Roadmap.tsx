@@ -28,7 +28,7 @@ export default function Roadmap() {
   return (
     <section
       id="roadmap"
-      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
     >
       <div className="max-w-[780px] mx-auto" ref={ref}>
         <motion.div
@@ -37,7 +37,7 @@ export default function Roadmap() {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-mono text-sm text-[#e87a2a]">05.</span>
+            <span className="font-mono text-sm text-[#22d3ee]">05.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               What&apos;s Next
             </span>
@@ -55,7 +55,7 @@ export default function Roadmap() {
               initial={{ opacity: 0, x: -16 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.12 }}
-              className="flex gap-7 p-7 border border-[#161616] rounded-md bg-[#080808] hover:border-[#222] transition-all duration-300 group"
+              className="flex gap-4 sm:gap-7 p-4 sm:p-7 border border-[#161616] rounded-md bg-[#080808] hover:border-[#222] transition-all duration-300 group"
             >
               <div className="font-mono text-[24px] text-[#161616] group-hover:text-[#222] transition-colors duration-300 shrink-0 select-none pt-0.5">
                 {String(i + 1).padStart(2, "0")}
