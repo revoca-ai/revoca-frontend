@@ -33,7 +33,7 @@ export default function Offer() {
   return (
     <section
       id="capabilities"
-      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
     >
       <div className="max-w-[780px] mx-auto" ref={ref}>
         <motion.div
@@ -42,7 +42,7 @@ export default function Offer() {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-mono text-sm text-[#e87a2a]">03.</span>
+            <span className="font-mono text-sm text-[#22d3ee]">03.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               What We Offer Today
             </span>
@@ -53,7 +53,7 @@ export default function Offer() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
           {capabilities.map((c, i) => (
             <motion.div
               key={c.num}
@@ -67,7 +67,7 @@ export default function Offer() {
                   LIVE
                 </span>
               </div>
-              <div className="font-mono text-[11px] text-[#2e2e2e] mb-4 group-hover:text-[#e87a2a] transition-colors duration-300">
+              <div className="font-mono text-[11px] text-[#2e2e2e] mb-4 group-hover:text-[#22d3ee] transition-colors duration-300">
                 {c.num}
               </div>
               <h3 className="text-[16px] font-semibold text-[#ccc] mb-3 pr-10">{c.title}</h3>

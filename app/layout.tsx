@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   title: "Revoca AI — The Context Layer for Enterprises",
   description:
     "Your team's knowledge, always on. Revoca builds a living context graph of decisions, reasoning, and expertise — so your devs are never out of office.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-64x64.png", sizes: "64x64", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    other: [{ rel: "msapplication-TileImage", url: "/mstile-144x144.png" }],
+  },
 };
 
 export default function RootLayout({

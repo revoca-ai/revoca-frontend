@@ -16,12 +16,12 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section className="h-screen snap-start snap-always overflow-hidden flex flex-col justify-center items-center text-center relative px-6">
+    <section className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden flex flex-col justify-center items-center text-center relative px-6 pt-20 lg:pt-0">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 700px 500px at 50% 40%, rgba(232,122,42,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 700px 500px at 50% 40%, rgba(34,211,238,0.07) 0%, transparent 70%)",
         }}
       />
 
@@ -33,18 +33,18 @@ export default function Hero() {
       >
         <motion.p
           variants={fadeUp}
-          className="font-mono text-[11px] text-[#e87a2a] tracking-[3px] mb-8 uppercase"
+          className="font-mono text-[11px] text-[#22d3ee] tracking-[3px] mb-8 uppercase"
         >
           // the ultimate context layer for your company
         </motion.p>
 
         <motion.h1
           variants={fadeUp}
-          className="text-5xl sm:text-[64px] lg:text-[76px] font-extrabold text-[#f2f2f2] leading-[1.04] tracking-[-3px] mb-7"
+          className="text-[40px] sm:text-[58px] lg:text-[76px] font-extrabold text-[#f2f2f2] leading-[1.08] tracking-[-1px] sm:tracking-[-2px] lg:tracking-[-3px] mb-7"
         >
           The context layer
           <br />
-          <span className="text-[#e87a2a]">your company runs on.</span>
+          <span className="text-[#22d3ee]">your company runs on.</span>
         </motion.h1>
 
         <motion.p
@@ -64,7 +64,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => posthog.capture("hero_book_call_clicked", { location: "hero" })}
-            className="inline-block bg-[#e87a2a] px-10 py-3.5 font-mono text-[13px] text-black font-bold rounded hover:bg-[#d06a1a] hover:shadow-[0_0_40px_rgba(232,122,42,0.3)] transition-all duration-300"
+            className="inline-block bg-[#22d3ee] px-10 py-3.5 font-mono text-[13px] text-black font-bold rounded hover:bg-[#06b6d4] hover:shadow-[0_0_40px_rgba(34,211,238,0.3)] transition-all duration-300"
           >
             Book a Call &rarr;
           </a>

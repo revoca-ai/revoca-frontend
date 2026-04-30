@@ -5,19 +5,19 @@ import posthog from "posthog-js";
 
 export default function CTA() {
   return (
-    <section className="h-screen snap-start snap-always overflow-hidden px-6 relative border-t border-[#0e0e0e] flex flex-col">
+    <section className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 relative border-t border-[#0e0e0e] flex flex-col pt-24 lg:pt-0">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 600px 400px at 50% 50%, rgba(232,122,42,0.04) 0%, transparent 70%)",
+            "radial-gradient(ellipse 600px 400px at 50% 50%, rgba(34,211,238,0.04) 0%, transparent 70%)",
         }}
       />
 
       {/* Main CTA content — fills remaining space and centers vertically */}
       <div className="flex-1 flex flex-col justify-center items-center text-center relative max-w-[720px] mx-auto w-full">
         <FadeIn>
-          <div className="inline-block font-mono text-[10px] text-[#e87a2a] tracking-[3px] uppercase mb-6 border border-[#e87a2a]/20 px-4 py-2 rounded">
+          <div className="inline-block font-mono text-[10px] text-[#22d3ee] tracking-[3px] uppercase mb-6 border border-[#22d3ee]/20 px-4 py-2 rounded">
             06. Get In Touch
           </div>
         </FadeIn>
@@ -41,7 +41,7 @@ export default function CTA() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => posthog.capture("cta_book_call_clicked", { location: "cta_section" })}
-              className="inline-block bg-[#e87a2a] px-12 py-4 font-mono text-[13px] text-black font-bold rounded hover:bg-[#d06a1a] hover:shadow-[0_0_40px_rgba(232,122,42,0.25)] transition-all duration-300"
+              className="inline-block bg-[#22d3ee] px-12 py-4 font-mono text-[13px] text-black font-bold rounded hover:bg-[#06b6d4] hover:shadow-[0_0_40px_rgba(34,211,238,0.25)] transition-all duration-300"
             >
               Book a Call &rarr;
             </a>
@@ -87,7 +87,7 @@ export default function CTA() {
               { value: "∞", label: "Context Depth" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="font-mono text-2xl font-bold text-[#e87a2a] mb-1">{stat.value}</div>
+                <div className="font-mono text-2xl font-bold text-[#22d3ee] mb-1">{stat.value}</div>
                 <div className="font-mono text-[9px] text-[#2e2e2e] tracking-[2px] uppercase">{stat.label}</div>
               </div>
             ))}
@@ -99,17 +99,17 @@ export default function CTA() {
       <footer className="shrink-0 py-6 border-t border-[#111] relative">
         <div className="max-w-[780px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <a href="#" className="font-mono text-sm font-bold tracking-tight">
-            <span className="text-[#e87a2a]">&gt;</span>{" "}
+            <span className="text-[#22d3ee]">&gt;</span>{" "}
             <span className="text-[#ddd]">revoca</span>
             <span className="text-[#333]">.</span>
-            <span className="text-[#e87a2a]">ai</span>
+            <span className="text-[#22d3ee]">ai</span>
           </a>
           <p className="font-mono text-[10px] text-[#282828] text-center">
             &copy; 2025 Revoca AI &mdash; The Context Layer for Your Company
           </p>
           <a
             href="mailto:revoca.ai@gmail.com"
-            className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#e87a2a] transition-colors duration-200"
+            className="font-mono text-[11px] text-[#3a3a3a] hover:text-[#22d3ee] transition-colors duration-200"
           >
             revoca.ai@gmail.com
           </a>

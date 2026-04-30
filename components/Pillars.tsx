@@ -21,12 +21,12 @@ export default function Pillars() {
   return (
     <section
       id="about"
-      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
     >
       <div className="max-w-[780px] mx-auto">
         <FadeIn>
           <div className="flex items-center gap-3 mb-6 sm:mb-14">
-            <span className="font-mono text-sm text-[#e87a2a]">01.</span>
+            <span className="font-mono text-sm text-[#22d3ee]">01.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">The Problem</span>
             <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
           </div>

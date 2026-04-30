@@ -29,12 +29,12 @@ export default function Connectors() {
   return (
     <section
       id="integrations"
-      className="h-screen snap-start snap-always overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
     >
       <div className="max-w-[720px] mx-auto">
         <FadeIn>
           <div className="flex items-center gap-3 mb-6 sm:mb-14">
-            <span className="font-mono text-sm text-[#e87a2a]">04.</span>
+            <span className="font-mono text-sm text-[#22d3ee]">04.</span>
             <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
               Integrations
             </span>
