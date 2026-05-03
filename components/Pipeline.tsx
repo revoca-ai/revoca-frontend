@@ -25,25 +25,32 @@ const solutions = [
   },
 ];
 
-function SolutionVisual({ kind }: { kind: string }) {
+function SolutionVisual({ kind, active }: { kind: string; active: boolean }) {
+  const trigger = active;
   if (kind === "heartbeat") {
     return (
       <svg viewBox="0 0 160 90" className="w-full h-full">
         <line x1="0" y1="45" x2="160" y2="45" stroke="#22d3ee" strokeOpacity="0.1" strokeWidth="0.5" />
-        <path
+        {/* Heartbeat trace — draws in and loops on enter + hover */}
+        <motion.path
           d="M0 45 L36 45 L42 30 L50 60 L58 38 L66 50 L74 45 L160 45"
-          fill="none"
-          stroke="#22d3ee"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.85"
+          fill="none" stroke="#22d3ee" strokeWidth="1.4"
+          strokeLinecap="round" strokeLinejoin="round"
+          animate={trigger ? { pathLength: [0, 1, 1, 0] } : { pathLength: 1, opacity: 0.5 }}
+          transition={trigger
+            ? { duration: 3, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 0.8, 1] }
+            : { duration: 0.4 }}
         />
-        <motion.circle
-          cx="50" cy="60" r="2.4"
-          fill="#22d3ee"
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        {trigger && (
+          <motion.circle r="2.2" cy="45" fill="#22d3ee"
+            animate={{ cx: [0, 160] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
+        )}
+        <motion.circle cx="50" cy="60" r="2.4" fill="#22d3ee"
+          animate={trigger ? { opacity: [1, 0.4, 1], scale: [1, 1.4, 1] } : { opacity: 0.7, scale: 1 }}
+          transition={{ duration: 1.8, repeat: trigger ? Infinity : 0, ease: "easeInOut" }}
+          style={{ transformOrigin: "50px 60px" }}
         />
       </svg>
     );
@@ -51,37 +58,113 @@ function SolutionVisual({ kind }: { kind: string }) {
   if (kind === "tree") {
     return (
       <svg viewBox="0 0 160 90" className="w-full h-full">
-        <line x1="80" y1="78" x2="80" y2="58" stroke="#22d3ee" strokeWidth="1" opacity="0.85" />
-        <line x1="80" y1="58" x2="50" y2="38" stroke="#22d3ee" strokeWidth="1" opacity="0.7" />
-        <line x1="80" y1="58" x2="110" y2="38" stroke="#22d3ee" strokeWidth="1" opacity="0.7" />
-        <line x1="50" y1="38" x2="30" y2="20" stroke="#22d3ee" strokeWidth="1" opacity="0.5" />
-        <line x1="50" y1="38" x2="60" y2="20" stroke="#22d3ee" strokeWidth="1" opacity="0.5" />
-        <line x1="110" y1="38" x2="100" y2="20" stroke="#22d3ee" strokeWidth="1" opacity="0.5" />
-        <line x1="110" y1="38" x2="130" y2="20" stroke="#22d3ee" strokeWidth="1" opacity="0.5" />
-        <circle cx="80" cy="78" r="2.5" fill="#22d3ee" />
-        <circle cx="80" cy="58" r="2" fill="#22d3ee" />
-        <circle cx="50" cy="38" r="1.8" fill="#22d3ee" />
-        <circle cx="110" cy="38" r="1.8" fill="#22d3ee" />
-        <circle cx="30" cy="20" r="1.4" fill="#22d3ee" opacity="0.5" />
-        <circle cx="60" cy="20" r="1.4" fill="#22d3ee" opacity="0.5" />
-        <circle cx="100" cy="20" r="1.4" fill="#22d3ee" opacity="0.5" />
-        <circle cx="130" cy="20" r="1.4" fill="#22d3ee" opacity="0.5" />
+        {/* Branches draw in on hover, show static when idle */}
+        {[
+          { x1: 80,  y1: 78, x2: 80,  y2: 58, delay: 0,   w: 1.2, op: 0.85 },
+          { x1: 80,  y1: 58, x2: 50,  y2: 38, delay: 0.3, w: 1.2, op: 0.7  },
+          { x1: 80,  y1: 58, x2: 110, y2: 38, delay: 0.3, w: 1.2, op: 0.7  },
+          { x1: 50,  y1: 38, x2: 30,  y2: 20, delay: 0.6, w: 0.9, op: 0.5  },
+          { x1: 50,  y1: 38, x2: 60,  y2: 20, delay: 0.7, w: 0.9, op: 0.5  },
+          { x1: 110, y1: 38, x2: 100, y2: 20, delay: 0.6, w: 0.9, op: 0.5  },
+          { x1: 110, y1: 38, x2: 130, y2: 20, delay: 0.7, w: 0.9, op: 0.5  },
+        ].map((seg, i) => (
+          <motion.line
+            key={i}
+            x1={seg.x1} y1={seg.y1} x2={seg.x2} y2={seg.y2}
+            stroke="#22d3ee" strokeWidth={seg.w}
+            animate={
+              trigger
+                ? { pathLength: [0, 1], opacity: seg.op }
+                : { pathLength: 1, opacity: seg.op * 0.5 }
+            }
+            transition={
+              trigger
+                ? { duration: 0.5, delay: seg.delay, ease: "easeOut" }
+                : { duration: 0.4 }
+            }
+          />
+        ))}
+        {/* Nodes pop in on hover, dim when idle */}
+        {[
+          { cx: 80,  cy: 78, r: 2.5, delay: 0,   op: 1,   idleOp: 0.6  },
+          { cx: 80,  cy: 58, r: 2,   delay: 0.3,  op: 1,   idleOp: 0.6  },
+          { cx: 50,  cy: 38, r: 1.8, delay: 0.55, op: 1,   idleOp: 0.55 },
+          { cx: 110, cy: 38, r: 1.8, delay: 0.55, op: 1,   idleOp: 0.55 },
+          { cx: 30,  cy: 20, r: 1.4, delay: 0.85, op: 0.6, idleOp: 0.35 },
+          { cx: 60,  cy: 20, r: 1.4, delay: 0.95, op: 0.6, idleOp: 0.35 },
+          { cx: 100, cy: 20, r: 1.4, delay: 0.85, op: 0.6, idleOp: 0.35 },
+          { cx: 130, cy: 20, r: 1.4, delay: 0.95, op: 0.6, idleOp: 0.35 },
+        ].map((n, i) => (
+          <motion.circle
+            key={i}
+            cx={n.cx} cy={n.cy} r={n.r}
+            fill="#22d3ee"
+            animate={
+              trigger
+                ? { opacity: n.op, scale: 1 }
+                : { opacity: n.idleOp, scale: 1 }
+            }
+            transition={
+              trigger
+                ? { duration: 0.3, delay: n.delay, ease: "backOut" }
+                : { duration: 0.4 }
+            }
+            style={{ transformOrigin: `${n.cx}px ${n.cy}px` }}
+          />
+        ))}
       </svg>
     );
   }
+  // chart — all animations tied to trigger (so they start when section enters view)
   return (
     <svg viewBox="0 0 160 90" className="w-full h-full">
       <line x1="10" y1="20" x2="150" y2="20" stroke="#22d3ee" strokeOpacity="0.06" strokeWidth="0.5" />
       <line x1="10" y1="45" x2="150" y2="45" stroke="#22d3ee" strokeOpacity="0.06" strokeWidth="0.5" />
       <line x1="10" y1="70" x2="150" y2="70" stroke="#22d3ee" strokeOpacity="0.06" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="chart-area-2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#22d3ee" stopOpacity="0.22" />
+          <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {/* Area fill fades in after trigger */}
+      <motion.path
+        d="M10 60 L30 50 L50 55 L70 35 L90 40 L110 25 L130 30 L150 18 L150 80 L10 80 Z"
+        fill="url(#chart-area-2)"
+        animate={trigger ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 1.0 }}
+      />
+      {/* Line draws in on trigger */}
       <motion.path
         d="M10 60 L30 50 L50 55 L70 35 L90 40 L110 25 L130 30 L150 18"
         fill="none" stroke="#22d3ee" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 1.3, ease: "easeOut" }}
+        animate={trigger ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
       />
-      <circle cx="150" cy="18" r="2.5" fill="#22d3ee" opacity="0.8" />
+      {/* Bouncing data points appear along the line once drawn */}
+      {trigger && [[30, 50], [50, 55], [70, 35], [90, 40], [110, 25], [130, 30]].map(([cx, cy], i) => (
+        <motion.circle
+          key={i} cx={cx} cy={cy} r="1.8" fill="#22d3ee"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: [0, 0.8, 0.5], scale: [0, 1.2, 1] }}
+          transition={{ duration: 0.4, delay: 1.0 + i * 0.1, ease: "backOut" }}
+        />
+      ))}
+      {/* Live dot pulses continuously */}
+      <motion.circle
+        cx="150" cy="18" r="2.5" fill="#22d3ee"
+        animate={trigger ? { opacity: [1, 0.4, 1], scale: [1, 1.6, 1] } : { opacity: 0.3, scale: 1 }}
+        transition={{ duration: 1.4, repeat: trigger ? Infinity : 0, ease: "easeInOut", delay: 1.2 }}
+        style={{ transformOrigin: "150px 18px" }}
+      />
+      {/* Ripple from live dot */}
+      {trigger && (
+        <motion.circle
+          cx="150" cy="18" r="2.5" fill="none" stroke="#22d3ee" strokeWidth="0.8"
+          animate={{ r: [2.5, 10], opacity: [0.6, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut", delay: 1.2 }}
+        />
+      )}
     </svg>
   );
 }
@@ -138,8 +221,7 @@ export default function Pipeline() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.25 + i * 0.15 }}
               className="group relative rounded-xl overflow-hidden border border-[#22d3ee]/15 bg-[#0a1216]/40 backdrop-blur-md
-                         hover:border-[#22d3ee]/40 hover:bg-[#0a1216]/70
-                         hover:shadow-[0_0_60px_rgba(34,211,238,0.12),inset_0_0_40px_rgba(34,211,238,0.04)]
+                         hover:border-[#22d3ee]/35 hover:bg-[#0a1216]/65
                          transition-all duration-500"
             >
               {i > 0 && <FlowConnector visible={isInView} side="left" />}
@@ -147,7 +229,7 @@ export default function Pipeline() {
 
               {/* Visual */}
               <div className="aspect-[16/7] w-full overflow-hidden relative bg-gradient-to-b from-[#0c1a20]/40 to-transparent border-b border-[#1a2228] p-4">
-                <SolutionVisual kind={s.visual} />
+                <SolutionVisual kind={s.visual} active={isInView} />
               </div>
 
               {/* Body */}

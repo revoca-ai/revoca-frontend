@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const problems = [
   {
@@ -22,33 +22,41 @@ const problems = [
 ];
 
 function CardVisual({ kind, active }: { kind: string; active: boolean }) {
+  const trigger = active;
   if (kind === "fade") {
-    // Static graph with one node that fades very slowly. No scaling rings.
     return (
       <svg viewBox="0 0 160 90" className="w-full h-full">
-        <line x1="30" y1="30" x2="80" y2="20" stroke="#22d3ee" strokeOpacity="0.3" strokeWidth="0.7" />
-        <line x1="80" y1="20" x2="130" y2="35" stroke="#22d3ee" strokeOpacity="0.3" strokeWidth="0.7" />
-        <line x1="30" y1="30" x2="50" y2="65" stroke="#22d3ee" strokeOpacity="0.3" strokeWidth="0.7" />
-        <line x1="50" y1="65" x2="100" y2="70" stroke="#22d3ee" strokeOpacity="0.3" strokeWidth="0.7" />
-        <line x1="100" y1="70" x2="130" y2="35" stroke="#22d3ee" strokeOpacity="0.3" strokeWidth="0.7" />
-        {/* Severed edge — dashed, static */}
-        <line
+        <line x1="30" y1="30" x2="80" y2="20" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="0.7" />
+        <line x1="80" y1="20" x2="130" y2="35" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="0.7" />
+        <line x1="30" y1="30" x2="50" y2="65" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="0.7" />
+        <line x1="50" y1="65" x2="100" y2="70" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="0.7" />
+        <line x1="100" y1="70" x2="130" y2="35" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="0.7" />
+        {/* Severed edge — flickers on enter + hover */}
+        <motion.line
           x1="80" y1="20" x2="100" y2="70"
           stroke="#22d3ee" strokeWidth="0.7" strokeDasharray="2 3"
-          opacity="0.25"
+          animate={trigger ? { opacity: [0.5, 0.08, 0.5] } : { opacity: 0.2 }}
+          transition={{ duration: 1.6, repeat: trigger ? Infinity : 0, ease: "easeInOut" }}
         />
-        {[
-          [30, 30], [80, 20], [130, 35], [50, 65], [130, 70]
-        ].map(([x, y], i) => (
+        {[[30, 30], [80, 20], [130, 35], [50, 65], [130, 70]].map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r="2" fill="#22d3ee" opacity="0.85" />
         ))}
-        {/* Slowly fading node — gentle, only when card is active */}
+        {/* Fading node — pulses on enter + hover */}
         <motion.circle
           cx="100" cy="70" r="2.4"
           fill="#22d3ee"
-          animate={active ? { opacity: [1, 0.25, 1] } : { opacity: 0.4 }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+          animate={trigger ? { opacity: [1, 0.12, 1] } : { opacity: 0.5 }}
+          transition={{ duration: 1.8, repeat: trigger ? Infinity : 0, ease: "easeInOut" }}
         />
+        {/* Ripple ring */}
+        {trigger && (
+          <motion.circle
+            cx="100" cy="70" r="2.4"
+            fill="none" stroke="#22d3ee" strokeWidth="0.8"
+            animate={{ r: [2.4, 9], opacity: [0.7, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+          />
+        )}
       </svg>
     );
   }
@@ -60,34 +68,73 @@ function CardVisual({ kind, active }: { kind: string; active: boolean }) {
     ];
     return (
       <svg viewBox="0 0 160 90" className="w-full h-full">
+        {pts.slice(0, 6).map(([x1, y1], i) => {
+          const [x2, y2] = pts[i + 6];
+          return (
+            <motion.line
+              key={i}
+              x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke="#22d3ee" strokeWidth="0.5" strokeDasharray="1.5 4"
+              animate={trigger ? { opacity: [0.05, 0.22, 0.05] } : { opacity: 0.05 }}
+              transition={{ duration: 2.2, repeat: trigger ? Infinity : 0, delay: i * 0.18, ease: "easeInOut" }}
+            />
+          );
+        })}
         {pts.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="1.6" fill="#22d3ee" opacity="0.7" />
+          <motion.circle
+            key={i}
+            cx={x} cy={y} r="1.6"
+            fill="#22d3ee"
+            animate={
+              trigger
+                ? { opacity: [0.35, 0.9, 0.35], y: [0, -2.5, 0] }
+                : { opacity: 0.55, y: 0 }
+            }
+            transition={{
+              duration: 2 + (i % 3) * 0.35,
+              repeat: trigger ? Infinity : 0,
+              delay: i * 0.12,
+              ease: "easeInOut",
+            }}
+          />
         ))}
       </svg>
     );
   }
+  // fog — scanning overlay, only on hover
   return (
     <svg viewBox="0 0 160 90" className="w-full h-full">
-      {[
-        [20, 50, 24], [44, 32, 42], [68, 60, 14], [92, 28, 46], [116, 50, 24], [140, 38, 36],
-      ].map(([x, y, h], i) => (
-        <rect
-          key={i}
-          x={x}
-          y={y}
-          width="14"
-          height={h}
-          fill="#22d3ee"
-          opacity="0.4"
-        />
-      ))}
+      <defs>
+        <linearGradient id="fog-grad" x1="0" x2="1">
+          <stop offset="0"   stopColor="#050505" stopOpacity="0" />
+          <stop offset="0.4" stopColor="#050505" stopOpacity="0.88" />
+          <stop offset="0.6" stopColor="#050505" stopOpacity="0.88" />
+          <stop offset="1"   stopColor="#050505" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {[[20, 50, 24], [44, 32, 42], [68, 60, 14], [92, 28, 46], [116, 50, 24], [140, 38, 36]].map(
+        ([x, y, h], i) => (
+          <rect key={i} x={x} y={y} width="14" height={h} fill="#22d3ee" opacity="0.5" />
+        )
+      )}
+      {/* Fog only moves on hover; otherwise sits at rest covering half */}
+      <motion.rect
+        x="-60" y="0" width="80" height="90"
+        fill="url(#fog-grad)"
+        animate={trigger ? { x: [-60, 180] } : { x: 40 }}
+        transition={
+          trigger
+            ? { duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.4 }
+            : { duration: 0.6 }
+        }
+      />
       <text
         x="80" y="56"
         textAnchor="middle"
         fontFamily="ui-monospace, monospace"
         fontSize="22"
         fill="#22d3ee"
-        opacity={active ? 0.95 : 0.55}
+        opacity={trigger ? 0.95 : 0.55}
       >?</text>
     </svg>
   );
@@ -96,7 +143,6 @@ function CardVisual({ kind, active }: { kind: string; active: boolean }) {
 export default function Pillars() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <section
@@ -121,28 +167,17 @@ export default function Pillars() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {problems.map((p, i) => {
-            const active = hovered === i;
-            return (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.25 + i * 0.12 }}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                className={`group relative rounded-xl overflow-hidden cursor-default
-                            border transition-all duration-500
-                            backdrop-blur-md
-                            ${
-                              active
-                                ? "border-[#22d3ee]/40 bg-[#0a1216]/70 shadow-[0_0_60px_rgba(34,211,238,0.10),inset_0_0_40px_rgba(34,211,238,0.04)]"
-                                : "border-[#1a1a1a] bg-[#080808]/70"
-                            }`}
-              >
+          {problems.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.25 + i * 0.12 }}
+              className="group relative rounded-xl overflow-hidden cursor-default border border-[#1a1a1a] bg-[#080808]/70 hover:border-[#22d3ee]/30 backdrop-blur-md transition-all duration-500"
+            >
                 {/* Top visual */}
                 <div className="aspect-[16/7] w-full overflow-hidden relative bg-gradient-to-b from-[#0a1216]/40 to-transparent border-b border-[#141414] p-4">
-                  <CardVisual kind={p.visual} active={active} />
+                  <CardVisual kind={p.visual} active={isInView} />
                 </div>
 
                 {/* Card body */}
@@ -158,20 +193,16 @@ export default function Pillars() {
                   </p>
                 </div>
 
-                {/* Subtle top edge sweep on hover */}
                 <span
                   aria-hidden
                   className="absolute inset-x-0 top-0 h-px"
                   style={{
-                    background:
-                      "linear-gradient(90deg, transparent, #22d3ee 50%, transparent)",
-                    opacity: active ? 0.5 : 0.15,
-                    transition: "opacity 0.5s",
+                    background: "linear-gradient(90deg, transparent, #22d3ee 50%, transparent)",
+                    opacity: 0.2,
                   }}
                 />
               </motion.div>
-            );
-          })}
+          ))}
         </div>
 
         {/* Status footer */}
