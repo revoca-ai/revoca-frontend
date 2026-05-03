@@ -1,15 +1,22 @@
 "use client";
 
-import FadeIn from "./FadeIn";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { SectionHeader } from "./Pillars";
 
-const connectors = [
+type Connector = {
+  name: string;
+  svg: string;
+};
+
+const connectors: Connector[] = [
   {
     name: "GitHub",
     svg: "M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z",
   },
   {
-    name: "Docs",
-    svg: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM6 20V4h7v5h5v11H6z",
+    name: "Slack",
+    svg: "M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.528 2.528 0 012.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 012.521 2.521 2.527 2.527 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 012.522-2.521A2.528 2.528 0 0124 8.834a2.528 2.528 0 01-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 01-2.523 2.521 2.527 2.527 0 01-2.52-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 012.523 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 01-2.52-2.523 2.526 2.526 0 012.52-2.52h6.313A2.527 2.527 0 0124 15.165a2.528 2.528 0 01-2.522 2.523h-6.313z",
   },
   {
     name: "Discord",
@@ -20,66 +27,95 @@ const connectors = [
     svg: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z",
   },
   {
-    name: "Slack",
-    svg: "M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.528 2.528 0 012.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 012.521 2.521 2.527 2.527 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 012.522-2.521A2.528 2.528 0 0124 8.834a2.528 2.528 0 01-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 01-2.523 2.521 2.527 2.527 0 01-2.52-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 012.523 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 01-2.52-2.523 2.526 2.526 0 012.52-2.52h6.313A2.527 2.527 0 0124 15.165a2.528 2.528 0 01-2.522 2.523h-6.313z",
+    name: "Docs",
+    svg: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM6 20V4h7v5h5v11H6z",
   },
 ];
 
+const more = [
+  "Salesforce", "Jira", "Confluence", "Zoom", "Google Meet",
+  "Linear", "Notion", "Email", "Loom", "Figma", "Intercom", "...",
+];
+
 export default function Connectors() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
     <section
       id="integrations"
-      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0"
+      className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden px-6 border-t border-[#0e0e0e] flex flex-col justify-center py-24 lg:py-0 relative"
     >
-      <div className="max-w-[720px] mx-auto">
-        <FadeIn>
-          <div className="flex items-center gap-3 mb-6 sm:mb-14">
-            <span className="font-mono text-sm text-[#22d3ee]">04.</span>
-            <span className="text-3xl font-bold text-[#e8e8e8] tracking-tight">
-              Integrations
-            </span>
-            <div className="flex-1 h-px bg-gradient-to-r from-[#1a1a1a] to-transparent ml-4" />
-          </div>
-        </FadeIn>
+      <div className="max-w-[860px] mx-auto w-full" ref={ref}>
+        <SectionHeader
+          number="04"
+          title="Integrations"
+          subtitle="Connects where your team already works."
+          isInView={isInView}
+        />
 
-        <FadeIn delay={0.1}>
-          <p className="text-center text-[14px] text-[#777] mb-6 sm:mb-10">
-            Connects where your team already works.
-          </p>
-        </FadeIn>
-
-        <div className="flex justify-center gap-8 sm:gap-12 lg:gap-16 flex-wrap">
+        {/* Connector cards */}
+        <div className="grid grid-cols-5 gap-3 sm:gap-4 mb-8 sm:mb-10">
           {connectors.map((c, i) => (
-            <FadeIn key={c.name} delay={0.15 + i * 0.05}>
-              <div className="text-center w-20 group">
-                <div className="w-[60px] h-[60px] border border-[#161616] rounded-md flex items-center justify-center mx-auto mb-3 bg-[#0a0a0a] group-hover:border-[#2a2a2a] group-hover:shadow-[0_0_16px_rgba(255,255,255,0.03)] transition-all duration-300">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#666] group-hover:fill-[#aaa] transition-colors duration-300">
-                    <path d={c.svg} />
-                  </svg>
-                </div>
-                <span className="font-mono text-[12px] text-[#666]">{c.name}</span>
+            <motion.div
+              key={c.name}
+              initial={{ opacity: 0, y: 18 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.07 }}
+              className="group flex flex-col items-center gap-3 p-4 sm:p-5 rounded-xl bg-[#0a1216]/40 border border-[#22d3ee]/12 backdrop-blur-sm hover:border-[#22d3ee]/40 hover:bg-[#0a1216]/70 transition-all duration-300 cursor-default"
+            >
+              {/* Icon */}
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#080c0e] border border-[#1a1a1a] flex items-center justify-center group-hover:border-[#22d3ee]/30 transition-colors duration-300">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-5 h-5 fill-[#888] group-hover:fill-[#22d3ee] transition-colors duration-300"
+                >
+                  <path d={c.svg} />
+                </svg>
               </div>
-            </FadeIn>
+
+              {/* Name */}
+              <span className="font-mono text-[11px] text-[#888] group-hover:text-[#ccc] transition-colors duration-300 text-center leading-tight">
+                {c.name}
+              </span>
+
+              {/* LIVE badge */}
+              <span
+                className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-[#0a1a20] text-[#22d3ee]/80 border border-[#22d3ee]/25"
+              >
+                LIVE
+              </span>
+            </motion.div>
           ))}
         </div>
 
-        <FadeIn delay={0.45}>
-          <div className="mt-8 text-center">
-            <div className="flex flex-wrap justify-center gap-2 mb-5">
-              {["Salesforce", "Jira", "Confluence", "Zoom", "Google Meet", "Linear", "Notion", "Email", "Loom", "Figma", "Intercom", "..."].map((name) => (
-                <span
-                  key={name}
-                  className="font-mono text-[11px] text-[#666] border border-[#222] rounded px-2.5 py-1 bg-[#0d0d0d] hover:text-[#999] hover:border-[#333] transition-colors duration-200"
-                >
-                  {name}
-                </span>
-              ))}
-            </div>
-            <p className="text-[12px] text-[#555] max-w-[400px] mx-auto leading-[1.8]">
-              If your team works in it, Revoca will connect to it.
-            </p>
+        {/* "And more" section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="border-t border-[#111] pt-6 sm:pt-8"
+        >
+          <p className="font-mono text-[11px] text-[#555] tracking-[2px] mb-4 text-center">
+            COMING SOON
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {more.map((name, i) => (
+              <motion.span
+                key={name}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.3, delay: 0.8 + i * 0.04 }}
+                className="font-mono text-[11px] text-[#666] border border-[#1f2630] rounded px-2.5 py-1 bg-[#0a1216]/30 hover:text-[#22d3ee] hover:border-[#22d3ee]/35 transition-colors duration-200"
+              >
+                {name}
+              </motion.span>
+            ))}
           </div>
-        </FadeIn>
+          <p className="text-center text-[12px] text-[#555] max-w-[400px] mx-auto leading-[1.8] mt-5">
+            If your team works in it, Revoca will connect to it.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

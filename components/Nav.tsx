@@ -17,8 +17,16 @@ export default function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] bg-[rgba(5,5,5,0.88)] backdrop-blur-xl border-b border-[#141414]">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-[100px] py-4 sm:py-5">
-        <a href="#" className="font-mono text-sm sm:text-base font-bold tracking-tight">
-          <span className="text-[#22d3ee]">&gt;</span>{" "}
+        <a
+          href="#"
+          className="font-mono text-sm sm:text-base font-bold tracking-tight flex items-center gap-2 group"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/Revoca%20logo.svg"
+            alt="Revoca"
+            className="w-[22px] h-[22px] rounded-full"
+          />
           <span className="text-[#eee]">revoca</span>
           <span className="text-[#444]">.</span>
           <span className="text-[#22d3ee]">ai</span>
