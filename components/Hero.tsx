@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import posthog from "posthog-js";
 import { useRef } from "react";
+import TryBetaButton from "./TryBetaButton";
 
 const stagger = {
   hidden: {},
@@ -124,12 +125,7 @@ export default function Hero() {
           >
             Book a Call &rarr;
           </MagneticButton>
-          <MagneticButton
-            href="https://t.me/RevokaBetaBot"
-            onClick={() => posthog.capture("hero_try_beta_clicked", { location: "hero" })}
-          >
-            Try the Beta &rarr;
-          </MagneticButton>
+          <TryBetaButton magnetic location="hero" />
         </motion.div>
       </motion.div>
 
