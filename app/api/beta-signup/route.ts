@@ -10,7 +10,10 @@ export async function POST(request: Request) {
 
   const res = await fetch(`${baseUri}/beta-signup`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.BETA_USERS_BEARER_TOKEN}`,
+    },
     body: JSON.stringify({ name, email }),
   });
 
