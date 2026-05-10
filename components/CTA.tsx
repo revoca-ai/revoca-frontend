@@ -4,6 +4,7 @@ import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import FadeIn from "./FadeIn";
 import posthog from "posthog-js";
 import { useRef } from "react";
+import TryBetaButton from "./TryBetaButton";
 
 function MagneticButton({
   children,
@@ -142,12 +143,7 @@ export default function CTA() {
             >
               Book a Call &rarr;
             </MagneticButton>
-            <MagneticButton
-              href="https://t.me/RevokaBetaBot"
-              onClick={() => posthog.capture("cta_try_beta_clicked", { location: "cta_section" })}
-            >
-              Try the Beta &rarr;
-            </MagneticButton>
+            <TryBetaButton magnetic location="cta_section" />
           </div>
         </FadeIn>
 
