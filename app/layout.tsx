@@ -41,51 +41,61 @@ export default function RootLayout({
         baseTheme: dark,
         variables: {
           colorPrimary: "#22d3ee",
-          colorBackground: "#080808",
-          colorInputBackground: "#0d0d0d",
-          colorInputText: "#f6feff",
-          colorText: "#f6feff",
-          colorTextSecondary: "#888",
-          colorNeutral: "#555",
+          colorBackground: "#0f0f0f",
+          colorInputBackground: "#1a1a1a",
+          colorInputText: "#f0f9ff",
+          colorText: "#e8f5f8",
+          colorTextSecondary: "#8fa8b2",
+          colorNeutral: "#8fa8b2",
           colorDanger: "#f87171",
           colorSuccess: "#34d399",
-          borderRadius: "0.375rem",
+          colorWarning: "#fbbf24",
+          borderRadius: "6px",
           fontFamily: "'JetBrains Mono', 'Courier New', monospace",
           fontFamilyButtons: "'JetBrains Mono', 'Courier New', monospace",
           fontSize: "13px",
         },
         elements: {
-          card: "bg-[#080808] border border-[#1a1a1a] shadow-[0_0_80px_rgba(34,211,238,0.06)]",
-          headerTitle: "text-[#f6feff] font-mono",
-          headerSubtitle: "text-[#555] font-mono",
-          socialButtonsBlockButton: "border border-[#1e1e1e] bg-[#0d0d0d] hover:bg-[#111] hover:border-[#22d3ee]/20 text-[#aaa] transition-all",
-          socialButtonsBlockButtonText: "font-mono text-[12px]",
-          dividerLine: "bg-[#1a1a1a]",
-          dividerText: "text-[#333] font-mono text-[11px]",
-          formFieldLabel: "text-[#666] font-mono text-[11px] tracking-wider uppercase",
-          formFieldInput: "bg-[#0d0d0d] border-[#1e1e1e] text-[#f6feff] font-mono focus:border-[#22d3ee]/50 focus:ring-[#22d3ee]/10",
-          formButtonPrimary: "bg-[#22d3ee] hover:bg-[#06b6d4] text-black font-mono font-bold text-[13px] shadow-none hover:shadow-[0_0_20px_rgba(34,211,238,0.25)] transition-all",
-          footerActionLink: "text-[#22d3ee] hover:text-[#06b6d4] font-mono",
-          identityPreviewText: "text-[#aaa] font-mono",
-          identityPreviewEditButton: "text-[#22d3ee] font-mono",
-          userButtonPopoverCard: "bg-[#080808] border border-[#1a1a1a] shadow-[0_0_60px_rgba(0,0,0,0.8)]",
-          userButtonPopoverActionButton: "hover:bg-[#0f0f0f] text-[#aaa] hover:text-[#f6feff] font-mono transition-colors",
-          userButtonPopoverActionButtonText: "font-mono text-[12px]",
-          userButtonPopoverFooter: "border-t border-[#111]",
-          userPreviewMainIdentifier: "text-[#f6feff] font-mono text-[13px]",
-          userPreviewSecondaryIdentifier: "text-[#555] font-mono text-[11px]",
-          avatarBox: "ring-1 ring-[#22d3ee]/20",
-          badge: "bg-[#22d3ee]/10 text-[#22d3ee] font-mono",
-          navbar: "bg-[#080808] border-r border-[#1a1a1a]",
-          navbarButton: "text-[#666] hover:text-[#f6feff] hover:bg-[#0f0f0f] font-mono transition-colors",
-          navbarButtonActive: "text-[#22d3ee] bg-[#22d3ee]/8",
-          pageScrollBox: "bg-[#080808]",
-          profileSectionTitle: "text-[#f6feff] font-mono border-b border-[#1a1a1a]",
-          profileSectionContent: "font-mono",
-          formFieldSuccessText: "text-[#34d399] font-mono",
-          formFieldErrorText: "text-[#f87171] font-mono text-[11px]",
-          otpCodeFieldInput: "border-[#1e1e1e] bg-[#0d0d0d] text-[#f6feff] font-mono focus:border-[#22d3ee]/50",
-          alertText: "font-mono text-[12px]",
+          card: "!bg-[#0f0f0f] !border !border-[#2a2a2a] !shadow-[0_0_80px_rgba(34,211,238,0.08),0_32px_64px_rgba(0,0,0,0.9)]",
+          headerTitle: "!text-[#f0f9ff]",
+          headerSubtitle: "!text-[#8fa8b2]",
+          socialButtonsBlockButton: "!bg-[#1a1a1a] !border !border-[#2e2e2e] hover:!bg-[#222] hover:!border-[#22d3ee]/30 !text-[#c8d8de] !transition-all",
+          socialButtonsBlockButtonText: "!text-[#c8d8de] !text-[12px]",
+          socialButtonsBlockButtonArrow: "!text-[#8fa8b2]",
+          dividerLine: "!bg-[#2a2a2a]",
+          dividerText: "!text-[#8fa8b2] !text-[11px]",
+          formFieldLabel: "!text-[#8fa8b2] !text-[11px] !tracking-wider !uppercase",
+          formFieldInput: "!bg-[#1a1a1a] !border-[#2e2e2e] !text-[#f0f9ff] focus:!border-[#22d3ee]/60 focus:!ring-1 focus:!ring-[#22d3ee]/20",
+          formFieldInputShowPasswordButton: "!text-[#8fa8b2] hover:!text-[#c8d8de]",
+          formButtonPrimary: "!bg-[#22d3ee] hover:!bg-[#06b6d4] !text-black !font-bold !text-[13px] hover:!shadow-[0_0_24px_rgba(34,211,238,0.35)] !transition-all",
+          formButtonReset: "!text-[#8fa8b2] hover:!text-[#c8d8de]",
+          footerActionText: "!text-[#8fa8b2]",
+          footerActionLink: "!text-[#22d3ee] hover:!text-[#67e8f9]",
+          identityPreviewText: "!text-[#c8d8de]",
+          identityPreviewEditButton: "!text-[#22d3ee]",
+          userButtonPopoverCard: "!bg-[#0f0f0f] !border !border-[#2a2a2a] !shadow-[0_0_60px_rgba(0,0,0,0.9)]",
+          userButtonPopoverActionButton: "hover:!bg-[#1a1a1a] !text-[#c8d8de] hover:!text-[#f0f9ff] !transition-colors",
+          userButtonPopoverActionButtonText: "!text-[12px]",
+          userButtonPopoverActionButtonIcon: "!text-[#8fa8b2]",
+          userButtonPopoverFooter: "!border-t !border-[#2a2a2a]",
+          userPreviewMainIdentifier: "!text-[#f0f9ff] !text-[13px]",
+          userPreviewSecondaryIdentifier: "!text-[#8fa8b2] !text-[11px]",
+          avatarBox: "!ring-1 !ring-[#22d3ee]/25",
+          badge: "!bg-[#22d3ee]/15 !text-[#22d3ee]",
+          navbar: "!bg-[#0f0f0f] !border-r !border-[#2a2a2a]",
+          navbarButton: "!text-[#8fa8b2] hover:!text-[#f0f9ff] hover:!bg-[#1a1a1a] !transition-colors",
+          navbarButtonActive: "!text-[#22d3ee] !bg-[#22d3ee]/10",
+          pageScrollBox: "!bg-[#0f0f0f]",
+          profileSectionTitle: "!text-[#f0f9ff] !border-b !border-[#2a2a2a]",
+          profileSectionContent: "!text-[#c8d8de]",
+          profileSectionPrimaryButton: "!text-[#22d3ee] hover:!bg-[#22d3ee]/10 !border !border-[#22d3ee]/30",
+          formFieldSuccessText: "!text-[#34d399]",
+          formFieldErrorText: "!text-[#f87171] !text-[11px]",
+          formFieldWarningText: "!text-[#fbbf24] !text-[11px]",
+          otpCodeFieldInput: "!border-[#2e2e2e] !bg-[#1a1a1a] !text-[#f0f9ff] focus:!border-[#22d3ee]/60",
+          alertText: "!text-[12px]",
+          alert: "!border-[#2a2a2a] !bg-[#141414]",
+          clerkInternalA11yText: "!text-[#8fa8b2]",
         },
       }}
     >
@@ -109,17 +119,8 @@ export default function RootLayout({
             }}
           />
           <Script
-            id="clarity"
+            src={`https://www.clarity.ms/tag/${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}`}
             strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(c,l,a,r,i,t,y){
-                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");
-              `,
-            }}
           />
         </body>
       </html>
