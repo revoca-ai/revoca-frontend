@@ -77,7 +77,6 @@ export default function TryBetaButton({
   const { isLoaded, isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
   const [pendingBeta, setPendingBeta] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const ref = useRef<HTMLButtonElement>(null);
@@ -98,7 +97,7 @@ export default function TryBetaButton({
     y.set(0);
   };
 
-  const callBetaApi = async () => {
+  const callBetaApi = () => {
     const name =
       user?.fullName ||
       [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
@@ -107,15 +106,11 @@ export default function TryBetaButton({
 
     posthog.capture("try_beta_clicked", { location, email });
 
-    try {
-      await fetch("/api/beta-signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
-      });
-    } catch {
-      // show success regardless — don't block UX on backend errors
-    }
+    fetch("/api/beta-signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email }),
+    }).catch(() => {});
 
     setShowSuccess(true);
   };
@@ -123,8 +118,7 @@ export default function TryBetaButton({
   useEffect(() => {
     if (isLoaded && isSignedIn && pendingBeta) {
       setPendingBeta(false);
-      setLoading(true);
-      callBetaApi().finally(() => setLoading(false));
+      callBetaApi();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded, isSignedIn, pendingBeta]);
@@ -132,8 +126,7 @@ export default function TryBetaButton({
   const handleClick = () => {
     if (!isLoaded) return;
     if (isSignedIn) {
-      setLoading(true);
-      callBetaApi().finally(() => setLoading(false));
+      callBetaApi();
     } else {
       setPendingBeta(true);
       openSignIn({ fallbackRedirectUrl: window.location.href });
@@ -147,14 +140,13 @@ export default function TryBetaButton({
       <motion.button
         ref={ref}
         type="button"
-        disabled={loading}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
         onClick={handleClick}
         style={magnetic ? { x: sx, y: sy } : {}}
-        className="inline-block border border-[#1e1e1e] bg-[#050505]/40 backdrop-blur-sm px-10 py-3.5 font-mono text-[13px] text-[#aaa] rounded hover:border-[#22d3ee]/30 hover:text-[#fff] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        className="inline-block border border-[#1e1e1e] bg-[#050505]/40 backdrop-blur-sm px-10 py-3.5 font-mono text-[13px] text-[#aaa] rounded hover:border-[#22d3ee]/30 hover:text-[#fff] transition-colors duration-300 cursor-pointer"
       >
-        {loading ? "Sending…" : "Try the Beta →"}
+        Try the Beta →
       </motion.button>
 
       {showSuccess && (
