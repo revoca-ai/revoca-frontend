@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:deployed": "mkdir -p ../deployed-revoca-frontend && rsync -a --delete --exclude '.git' ./ ../deployed-revoca-frontend/ && rm -rf ../deployed-revoca-frontend/.git",
+    "deploy:deployed": "npm run sync:deployed && cd ../deployed-revoca-frontend && vercel --prod"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.3.2",
