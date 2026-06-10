@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import posthog from "posthog-js";
 
 function BetaSuccessModal({
@@ -18,24 +18,14 @@ function BetaSuccessModal({
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: 16 }}
+        initial={{ opacity: 0, scale: 0.95, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.92, y: 8 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative bg-[#080808] border border-[#1a1a1a] rounded-xl p-8 max-w-sm w-full mx-4 text-center shadow-[0_0_80px_rgba(34,211,238,0.08)]"
+        className="relative mx-4 w-full max-w-sm rounded-xl border border-line bg-panel p-8 text-center shadow-[0_32px_80px_rgba(0,0,0,0.7)]"
       >
-        {/* Glow ring */}
-        <div className="absolute inset-0 rounded-xl pointer-events-none border border-[#22d3ee]/10" />
-
-        <div className="w-14 h-14 rounded-full border border-[#22d3ee]/30 flex items-center justify-center mx-auto mb-5 bg-[#22d3ee]/5">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="text-[#22d3ee]"
-          >
+        <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-emerald-400">
             <path
               d="M5 13l4 4L19 7"
               stroke="currentColor"
@@ -46,19 +36,17 @@ function BetaSuccessModal({
           </svg>
         </div>
 
-        <h3 className="font-mono text-lg font-bold text-[#f6feff] mb-2">
-          You&apos;re on the list!
+        <h3 className="mb-2 text-[18px] font-semibold text-ink">
+          You&apos;re on the list
         </h3>
-        <p className="font-mono text-[13px] text-[#555] leading-[1.75] mb-1">
-          Beta access link has been mailed to
+        <p className="mb-1 text-[14px] leading-[1.7] text-body">
+          Your beta access link is on its way to
         </p>
-        <p className="font-mono text-[13px] text-[#22d3ee] mb-6 break-all">
-          {email}
-        </p>
+        <p className="mb-7 break-all text-[14px] font-medium text-accent">{email}</p>
 
         <button
           onClick={onClose}
-          className="border border-[#22d3ee]/30 px-7 py-2.5 font-mono text-[12px] text-[#22d3ee] rounded hover:bg-[#22d3ee]/8 hover:border-[#22d3ee]/50 transition-all duration-200"
+          className="cursor-pointer rounded-lg border border-line px-7 py-2.5 text-[14px] font-medium text-body transition-colors duration-200 hover:border-line-strong hover:text-ink"
         >
           Close
         </button>
@@ -68,34 +56,14 @@ function BetaSuccessModal({
 }
 
 export default function TryBetaButton({
-  magnetic = false,
   location = "unknown",
 }: {
-  magnetic?: boolean;
   location?: string;
 }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const { openSignIn } = useClerk();
   const [pendingBeta, setPendingBeta] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const ref = useRef<HTMLButtonElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 220, damping: 24, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 220, damping: 24, mass: 0.4 });
-
-  const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!magnetic) return;
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    x.set((e.clientX - (r.left + r.width / 2)) * 0.12);
-    y.set((e.clientY - (r.top + r.height / 2)) * 0.18);
-  };
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
 
   const callBetaApi = () => {
     const name =
@@ -137,17 +105,13 @@ export default function TryBetaButton({
 
   return (
     <>
-      <motion.button
-        ref={ref}
+      <button
         type="button"
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
         onClick={handleClick}
-        style={magnetic ? { x: sx, y: sy } : {}}
-        className="inline-block border border-[#1e1e1e] bg-[#050505]/40 backdrop-blur-sm px-10 py-3.5 font-mono text-[13px] text-[#aaa] rounded hover:border-[#22d3ee]/30 hover:text-[#fff] transition-colors duration-300 cursor-pointer"
+        className="cursor-pointer rounded-lg border border-line bg-panel/60 px-7 py-3 text-[15px] font-medium text-body backdrop-blur-sm transition-colors duration-200 hover:border-line-strong hover:text-ink"
       >
-        Try the Beta →
-      </motion.button>
+        Try the beta
+      </button>
 
       {showSuccess && (
         <BetaSuccessModal email={email} onClose={() => setShowSuccess(false)} />

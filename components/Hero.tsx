@@ -1,17 +1,17 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import posthog from "posthog-js";
-import { useRef } from "react";
 import TryBetaButton from "./TryBetaButton";
+import ProductDemo from "./ProductDemo";
 
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
@@ -19,124 +19,113 @@ const fadeUp = {
   },
 };
 
-function MagneticButton({
-  children,
-  href,
-  primary,
-  onClick,
-}: {
-  children: React.ReactNode;
-  href: string;
-  primary?: boolean;
-  onClick?: () => void;
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 220, damping: 24, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 220, damping: 24, mass: 0.4 });
-
-  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
-    x.set((e.clientX - cx) * 0.12);
-    y.set((e.clientY - cy) * 0.18);
-  };
-
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.a
-      ref={ref}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      onClick={onClick}
-      style={{ x: sx, y: sy }}
-      className={
-        primary
-          ? "inline-block bg-[#22d3ee] px-10 py-3.5 font-mono text-[13px] text-black font-bold rounded hover:bg-[#06b6d4] hover:shadow-[0_0_30px_rgba(34,211,238,0.25)] transition-all duration-300"
-          : "inline-block border border-[#1e1e1e] bg-[#050505]/40 backdrop-blur-sm px-10 py-3.5 font-mono text-[13px] text-[#aaa] rounded hover:border-[#22d3ee]/30 hover:text-[#fff] transition-colors duration-300"
-      }
-    >
-      {children}
-    </motion.a>
-  );
-}
-
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="min-h-screen lg:h-screen lg:snap-start lg:snap-always lg:overflow-hidden flex flex-col justify-center items-center text-center relative px-6 pt-20 lg:pt-0">
+    <section id="product" className="relative overflow-hidden pt-[152px] pb-20 sm:pb-28">
+      {/* Atmosphere: faint grid + top glow */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "radial-gradient(ellipse 900px 520px at 50% 30%, rgba(34,211,238,0.06), rgba(5,5,5,0) 70%)",
+          backgroundImage:
+            "linear-gradient(rgba(151,168,184,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(151,168,184,0.045) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
+          maskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%)",
         }}
       />
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[480px]"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 65% at 50% 0%, rgba(34,211,238,0.08), transparent 70%)",
+        }}
+      />
 
       <motion.div
         variants={stagger}
-        initial="hidden"
+        initial={reduceMotion ? false : "hidden"}
         animate="show"
-        className="relative z-10 max-w-[820px] flex flex-col items-center"
+        className="relative mx-auto flex w-full max-w-[860px] flex-col items-center px-6 text-center"
       >
-        <motion.div
+        <motion.a
           variants={fadeUp}
-          className="font-mono text-[11px] text-[#22d3ee] tracking-[3px] mb-8 uppercase"
+          href="https://t.me/RevokaBetaBot"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => posthog.capture("hero_beta_badge_clicked", { location: "hero" })}
+          className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-panel/70 py-1.5 pl-3 pr-4 text-[13px] text-body backdrop-blur-sm transition-colors duration-200 hover:border-line-strong hover:text-ink"
         >
-          {"// the ultimate context layer for your company"}
-        </motion.div>
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          Now in private beta
+          <span className="text-faint">&rarr;</span>
+        </motion.a>
 
         <motion.h1
           variants={fadeUp}
-          className="text-[44px] sm:text-[64px] lg:text-[78px] font-extrabold text-[#f6feff] leading-[1.04] tracking-[-2px] sm:tracking-[-3px] mb-7"
+          className="mb-6 text-[clamp(32px,9vw,42px)] font-semibold leading-[1.06] tracking-[-0.025em] text-ink sm:text-[60px] lg:text-[68px]"
         >
           The context layer
           <br />
-          <span className="text-[#22d3ee]">your company runs on.</span>
+          your company{" "}
+          <em className="font-serif font-normal italic text-accent-soft">
+            runs on
+          </em>
         </motion.h1>
 
         <motion.p
           variants={fadeUp}
-          className="text-[15px] text-[#9ca3af] max-w-[500px] mx-auto leading-[1.85] mb-10"
+          className="mx-auto mb-10 max-w-[540px] text-[16px] leading-[1.75] text-body sm:text-[17px]"
         >
-          Every decision, every reason, every context — captured and preserved.
-          So your company keeps moving, no matter what.
+          Revoca captures every decision, the reasoning behind it, and the
+          context around it — across Slack, GitHub, and your docs. So work
+          never stalls when people are away.
         </motion.p>
 
         <motion.div
           variants={fadeUp}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="mb-20 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
-          <MagneticButton
+          <a
             href="https://calendly.com/revoca-ai/30min"
-            primary
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => posthog.capture("hero_book_call_clicked", { location: "hero" })}
+            className="rounded-lg bg-accent px-7 py-3 text-[15px] font-semibold text-[#04181d] shadow-[0_8px_30px_-8px_rgba(34,211,238,0.45)] transition-all duration-200 hover:bg-accent-soft hover:shadow-[0_8px_36px_-6px_rgba(34,211,238,0.55)]"
           >
-            Book a Call &rarr;
-          </MagneticButton>
-          <TryBetaButton magnetic location="hero" />
+            Book a demo
+          </a>
+          <TryBetaButton location="hero" />
         </motion.div>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
-      >
-        <div className="w-px h-10 bg-gradient-to-b from-[#22d3ee]/40 to-transparent" />
-        <span className="font-mono text-[9px] text-[#3a3a3a] tracking-[3px]">SCROLL</span>
+        {/* Product demo */}
+        <motion.div variants={fadeUp} className="w-full">
+          <ProductDemo />
+        </motion.div>
+
+        {/* Proof strip */}
+        <motion.div
+          variants={fadeUp}
+          className="mt-14 grid w-full max-w-[640px] grid-cols-3 gap-6 border-t border-line pt-8"
+        >
+          {[
+            { value: "24/7", label: "Always available" },
+            { value: "4+", label: "Sources ingested live" },
+            { value: "Zero", label: "Data leakage by design" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-[22px] font-semibold tracking-[-0.01em] text-ink">
+                {stat.value}
+              </div>
+              <div className="mt-1 text-[12.5px] text-faint">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );
