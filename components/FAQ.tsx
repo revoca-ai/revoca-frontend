@@ -5,29 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import posthog from "posthog-js";
 import FadeIn from "./FadeIn";
 import { Container, SectionHeading } from "./Section";
-
-const faqs = [
-  {
-    q: "How does Revoca learn my company's context?",
-    a: "You connect the places your team already works — Slack, GitHub, Discord, and your docs. Revoca ingests both structured and unstructured knowledge and builds a living context graph of decisions, the reasoning behind them, and the people involved. From then on it stays current automatically.",
-  },
-  {
-    q: "Where does my team interact with Revoca?",
-    a: "Inside the tools you already use. Ask questions in Slack or Discord and get answers in-channel, or wire Revoca into agentic IDEs like Cursor through our MCP servers so developers code with full company context. There's no new app to adopt.",
-  },
-  {
-    q: "Can one team's agent access another team's data?",
-    a: "No. Revoca runs multiple agents over one knowledge base, each with strictly isolated, scoped access. A customer-facing agent cannot reach internal proprietary data — isolation is enforced at the architecture level, not as a setting.",
-  },
-  {
-    q: "What does setup look like?",
-    a: "Connect your sources and Revoca starts building your context graph immediately — there's no manual tagging, migration, or curation. Book a demo and we'll walk through a setup scoped to your stack.",
-  },
-  {
-    q: "How can I try it today?",
-    a: "Revoca is in private beta. You can try the beta bot on Telegram right now, or book a call and we'll set your team up directly in Slack or Discord.",
-  },
-];
+import { FAQS } from "@/lib/site";
 
 function FAQItem({
   q,
@@ -111,7 +89,7 @@ export default function FAQ() {
 
           <FadeIn delay={0.1}>
             <div className="border-t border-line">
-              {faqs.map((f, i) => (
+              {FAQS.map((f, i) => (
                 <FAQItem
                   key={f.q}
                   q={f.q}

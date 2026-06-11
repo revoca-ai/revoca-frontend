@@ -26,7 +26,7 @@ const pillars = [
 
 export default function Pipeline() {
   return (
-    <section id="how-it-works" className="border-t border-line bg-panel/30 py-24 sm:py-32">
+    <section id="how-it-works" className="border-t border-line py-24 sm:py-32">
       <Container>
         <SectionHeading
           eyebrow="How it works"
@@ -39,7 +39,7 @@ export default function Pipeline() {
               everything
             </>
           }
-          subtitle="Revoca observes where your team already works, builds a living context graph of decisions and reasoning, and answers from it — like a teammate who has been there since day one."
+          subtitle="Revoca observes where your team already works and builds a living context graph — an institutional memory of decisions and reasoning it can answer from, like a teammate who has been there since day one."
         />
 
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">

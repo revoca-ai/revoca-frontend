@@ -4,6 +4,7 @@ import Script from "next/script";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import PHProvider from "@/components/PostHogProvider";
+import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
 const schibsted = Schibsted_Grotesk({
@@ -24,15 +25,57 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Revoca — The Context Layer for the Enterprise",
-  description:
-    "Revoca captures every decision, the reasoning behind it, and the context around it — across Slack, GitHub, and your docs — so your company never loses what it knows.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  category: "technology",
+  keywords: [
+    "context layer",
+    "institutional knowledge",
+    "AI memory layer",
+    "AI brain for business",
+    "enterprise knowledge management",
+    "institutional memory",
+    "tribal knowledge",
+    "decision intelligence",
+    "knowledge graph",
+    "AI agent for Slack",
+    "MCP server",
+    "developer onboarding automation",
+    "Revoca",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Revoca — The Context Layer for the Enterprise",
+    title: SITE_TITLE,
     description:
-      "Every decision, the reasoning behind it, and the context around it — captured and queryable. The enterprise that never forgets.",
-    siteName: "Revoca",
+      "Every decision, the reasoning behind it, and the context around it — captured, preserved, and always one question away. The enterprise that never forgets.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description:
+      "The AI context layer that preserves your company's institutional knowledge — every decision and the reasoning behind it, queryable 24/7.",
   },
   icons: {
     icon: [
