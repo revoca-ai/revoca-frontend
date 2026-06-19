@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import posthog from "posthog-js";
+import { captureIfConsented } from "@/lib/posthog-client";
 import FadeIn from "./FadeIn";
 import { Container, SectionHeading } from "./Section";
 import { FAQS } from "@/lib/site";
@@ -66,9 +66,9 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="border-t border-line py-24 sm:py-32">
+    <section id="faq" className="border-t border-line py-20 sm:py-28">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.85fr_1.35fr] lg:gap-16">
           <div>
             <SectionHeading
               eyebrow="FAQ"
@@ -78,7 +78,7 @@ export default function FAQ() {
             <FadeIn delay={0.2}>
               <a
                 href="mailto:revoca.ai@gmail.com"
-                onClick={() => posthog.capture("faq_email_clicked")}
+                onClick={() => captureIfConsented("faq_email_clicked")}
                 className="-mt-6 inline-flex items-center gap-2 text-[15px] font-medium text-accent transition-colors duration-200 hover:text-accent-soft"
               >
                 revoca.ai@gmail.com
@@ -98,7 +98,7 @@ export default function FAQ() {
                   onToggle={() => {
                     const next = openIndex === i ? null : i;
                     setOpenIndex(next);
-                    if (next !== null) posthog.capture("faq_opened", { question: f.q });
+                    if (next !== null) captureIfConsented("faq_opened", { question: f.q });
                   }}
                 />
               ))}

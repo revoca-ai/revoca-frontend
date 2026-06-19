@@ -71,6 +71,14 @@ body {
   }
 }
 
+.atmosphere-grain {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1.5px);
+  background-size: 120px 120px, 170px 170px, 230px 230px;
+}
+
 /* Soft pulse for live status dots */
 @keyframes status-pulse {
   0%,

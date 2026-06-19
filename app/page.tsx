@@ -2,12 +2,8 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Pillars from "@/components/Pillars";
-import CostOfLostContext from "@/components/CostOfLostContext";
 import Pipeline from "@/components/Pipeline";
-import Offer from "@/components/Offer";
-import Connectors from "@/components/Connectors";
 import Security from "@/components/Security";
-import Roadmap from "@/components/Roadmap";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
@@ -27,12 +23,8 @@ export default function Home() {
       <main>
         <Hero />
         <Pillars />
-        <CostOfLostContext />
         <Pipeline />
-        <Offer />
-        <Connectors />
         <Security />
-        <Roadmap />
         <FAQ />
         <CTA />
       </main>

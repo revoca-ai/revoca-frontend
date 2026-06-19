@@ -40,9 +40,9 @@ const guarantees = [
 
 export default function Security() {
   return (
-    <section id="security" className="border-t border-line py-24 sm:py-32">
+    <section id="security" className="border-t border-line bg-panel/20 py-20 sm:py-28">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           {/* Left: heading */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             <FadeIn>
@@ -79,10 +79,14 @@ export default function Security() {
           </div>
 
           {/* Right: guarantees */}
-          <div className="flex flex-col gap-4">
+          <div className="overflow-hidden rounded-2xl border border-line bg-canvas/55">
             {guarantees.map((g, i) => (
               <FadeIn key={g.title} delay={0.1 + i * 0.08}>
-                <div className="group flex gap-5 rounded-xl border border-line bg-panel p-6 transition-all duration-300 hover:border-line-strong">
+                <div
+                  className={`group flex gap-5 p-6 transition-colors duration-300 hover:bg-panel ${
+                    i === guarantees.length - 1 ? "" : "border-b border-line"
+                  }`}
+                >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-raise text-body transition-colors duration-300 group-hover:text-accent">
                     {g.icon}
                   </div>

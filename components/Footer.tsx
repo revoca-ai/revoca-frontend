@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ManageConsentButton from "./ManageConsentButton";
 
 const columns: {
   title: string;
@@ -8,6 +9,7 @@ const columns: {
     title: "Product",
     links: [
       { label: "Overview", href: "/#product" },
+      { label: "Use cases", href: "/use-cases" },
       { label: "How it works", href: "/#how-it-works" },
       { label: "Capabilities", href: "/#capabilities" },
       { label: "Integrations", href: "/#integrations" },
@@ -44,6 +46,9 @@ const columns: {
     links: [
       { label: "Privacy policy", href: "/privacy" },
       { label: "Terms of service", href: "/terms" },
+      { label: "Cookie policy", href: "/cookies" },
+      { label: "Data rights request", href: "/data-request" },
+      { label: "Grievance redressal", href: "/grievance" },
     ],
   },
 ];
@@ -137,9 +142,12 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 sm:flex-row">
-          <p className="text-[13px] text-faint">
-            &copy; {new Date().getFullYear()} Revoca AI. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center gap-2 sm:items-start">
+            <p className="text-[13px] text-faint">
+              &copy; {new Date().getFullYear()} Revoca AI. All rights reserved.
+            </p>
+            <ManageConsentButton className="text-[13px] text-faint hover:text-ink" />
+          </div>
           <div className="flex items-center gap-2">
             <span
               className="h-1.5 w-1.5 rounded-full bg-emerald-400"

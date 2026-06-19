@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import posthog from "posthog-js";
+import { captureIfConsented } from "@/lib/posthog-client";
 
 function BetaSuccessModal({
   email,
@@ -72,7 +72,7 @@ export default function TryBetaButton({
       "";
     const email = user?.emailAddresses?.[0]?.emailAddress || "";
 
-    posthog.capture("try_beta_clicked", { location, email });
+    captureIfConsented("try_beta_clicked", { location, email });
 
     fetch("/api/beta-signup", {
       method: "POST",

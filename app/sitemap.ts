@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
+const legalPages = ["/privacy", "/terms", "/cookies", "/grievance", "/data-request"];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
@@ -10,16 +12,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/privacy`,
+      url: `${SITE_URL}/use-cases`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
-    {
-      url: `${SITE_URL}/terms`,
+    ...legalPages.map((path) => ({
+      url: `${SITE_URL}${path}`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "yearly" as const,
       priority: 0.3,
-    },
+    })),
   ];
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import posthog from "posthog-js";
+import { captureIfConsented } from "@/lib/posthog-client";
 import FadeIn from "./FadeIn";
 import { Container } from "./Section";
 import TryBetaButton from "./TryBetaButton";
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden border-t border-line py-28 sm:py-36">
+    <section className="relative overflow-hidden border-t border-line py-24 sm:py-32">
       {/* Atmosphere */}
       <div
         aria-hidden
@@ -53,7 +53,7 @@ export default function CTA() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() =>
-                posthog.capture("cta_book_call_clicked", { location: "cta_section" })
+                captureIfConsented("cta_book_call_clicked", { location: "cta_section" })
               }
               className="rounded-lg bg-accent px-7 py-3 text-[15px] font-semibold text-[#04181d] shadow-[0_8px_30px_-8px_rgba(34,211,238,0.45)] transition-all duration-200 hover:bg-accent-soft hover:shadow-[0_8px_36px_-6px_rgba(34,211,238,0.55)]"
             >
@@ -67,7 +67,7 @@ export default function CTA() {
           <div className="mt-8 flex flex-col items-center justify-center gap-2 text-[14px] sm:flex-row sm:gap-6">
             <a
               href="mailto:revoca.ai@gmail.com"
-              onClick={() => posthog.capture("cta_email_clicked", { location: "cta_section" })}
+              onClick={() => captureIfConsented("cta_email_clicked", { location: "cta_section" })}
               className="text-faint transition-colors duration-200 hover:text-ink"
             >
               revoca.ai@gmail.com
@@ -78,7 +78,7 @@ export default function CTA() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() =>
-                posthog.capture("cta_vision_deck_clicked", { location: "cta_section" })
+                captureIfConsented("cta_vision_deck_clicked", { location: "cta_section" })
               }
               className="text-faint transition-colors duration-200 hover:text-ink"
             >

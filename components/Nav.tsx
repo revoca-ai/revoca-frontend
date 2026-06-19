@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import posthog from "posthog-js";
+import { captureIfConsented } from "@/lib/posthog-client";
 import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 
 const links: { label: string; href: string }[] = [
   { label: "Product", href: "/#product" },
+  { label: "Problem", href: "/#problem" },
+  { label: "Use cases", href: "/use-cases" },
   { label: "How it works", href: "/#how-it-works" },
-  { label: "Integrations", href: "/#integrations" },
   { label: "Security", href: "/#security" },
-  { label: "Roadmap", href: "/#roadmap" },
   { label: "FAQ", href: "/#faq" },
 ];
 
@@ -50,7 +50,7 @@ export default function Nav() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
@@ -67,7 +67,8 @@ export default function Nav() {
           {!isSignedIn ? (
             <SignInButton mode="modal">
               <button
-                onClick={() => posthog.capture("nav_sign_in_clicked")}
+                type="button"
+                onClick={() => captureIfConsented("nav_sign_in_clicked")}
                 className="cursor-pointer px-3 py-2 text-[14px] font-medium text-body transition-colors duration-200 hover:text-ink"
               >
                 Log in
@@ -80,7 +81,7 @@ export default function Nav() {
             href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => posthog.capture("nav_book_call_clicked", { location: "nav_desktop" })}
+            onClick={() => captureIfConsented("nav_book_call_clicked", { location: "nav_desktop" })}
             className="rounded-lg bg-accent px-4 py-2 text-[14px] font-semibold text-[#04181d] transition-colors duration-200 hover:bg-accent-soft"
           >
             Book a demo
@@ -96,7 +97,7 @@ export default function Nav() {
             onClick={() => {
               const next = !open;
               setOpen(next);
-              posthog.capture("nav_mobile_menu_toggled", { opened: next });
+              captureIfConsented("nav_mobile_menu_toggled", { opened: next });
             }}
             className="flex flex-col gap-[5px] p-2"
             aria-label="Menu"
@@ -140,7 +141,11 @@ export default function Nav() {
               <div className="mt-3 flex items-center gap-3 border-t border-line pt-4">
                 {!isSignedIn && (
                   <SignInButton mode="modal">
-                    <button className="flex-1 cursor-pointer rounded-lg border border-line py-2.5 text-[14px] font-medium text-body transition-colors hover:border-line-strong hover:text-ink">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(false)}
+                      className="flex-1 cursor-pointer rounded-lg border border-line py-2.5 text-[14px] font-medium text-body transition-colors hover:border-line-strong hover:text-ink"
+                    >
                       Log in
                     </button>
                   </SignInButton>
@@ -150,7 +155,7 @@ export default function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() =>
-                    posthog.capture("nav_mobile_book_call_clicked", { location: "nav_mobile" })
+                    captureIfConsented("nav_mobile_book_call_clicked", { location: "nav_mobile" })
                   }
                   className="flex-1 rounded-lg bg-accent py-2.5 text-center text-[14px] font-semibold text-[#04181d] transition-colors hover:bg-accent-soft"
                 >

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import ScrollAtmosphere from "@/components/ScrollAtmosphere";
 import PHProvider from "@/components/PostHogProvider";
+import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
@@ -169,40 +170,12 @@ export default function RootLayout({
         className={`${schibsted.variable} ${instrument.variable} ${jetbrains.variable}`}
       >
         <body className="antialiased" suppressHydrationWarning>
-          <PHProvider>{children}</PHProvider>
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-4X74NH0PC4"
-            strategy="afterInteractive"
-          />
-          <Script
-            id="google-analytics"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-4X74NH0PC4');
-              `,
-            }}
-          />
-          <Script
-            id="microsoft-clarity"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(c,l,a,r,i,t,y){
-                  if (!i) { console.error("[Clarity] NEXT_PUBLIC_CLARITY_PROJECT_ID is missing"); return; }
-                  console.log("[Clarity] Initializing project:", i);
-                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                  t.onload=function(){console.log("[Clarity] Tag loaded. window.clarity typeof:", typeof c.clarity);};
-                  t.onerror=function(){console.error("[Clarity] Tag failed to load (network blocked, ad blocker, or invalid ID)");};
-                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || ''}");
-              `,
-            }}
-          />
+          <ScrollAtmosphere />
+          <ConsentProvider>
+            <PHProvider>
+              <div className="relative z-10">{children}</div>
+            </PHProvider>
+          </ConsentProvider>
         </body>
       </html>
     </ClerkProvider>

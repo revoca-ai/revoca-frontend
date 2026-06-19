@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import posthog from "posthog-js";
+import { captureIfConsented } from "@/lib/posthog-client";
 import TryBetaButton from "./TryBetaButton";
 import ProductDemo from "./ProductDemo";
 
@@ -23,7 +23,7 @@ export default function Hero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="product" className="relative overflow-hidden pt-[152px] pb-20 sm:pb-28">
+    <section id="product" className="relative overflow-hidden pt-[144px] pb-20 sm:pb-24">
       {/* Atmosphere: faint grid + top glow */}
       <div
         aria-hidden
@@ -58,7 +58,7 @@ export default function Hero() {
           href="https://t.me/RevokaBetaBot"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => posthog.capture("hero_beta_badge_clicked", { location: "hero" })}
+          onClick={() => captureIfConsented("hero_beta_badge_clicked", { location: "hero" })}
           className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-panel/70 py-1.5 pl-3 pr-4 text-[13px] text-body backdrop-blur-sm transition-colors duration-200 hover:border-line-strong hover:text-ink"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -89,13 +89,13 @@ export default function Hero() {
 
         <motion.div
           variants={fadeUp}
-          className="mb-20 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          className="mb-14 flex flex-col items-center justify-center gap-3 sm:mb-16 sm:flex-row"
         >
           <a
             href="https://calendly.com/revoca-ai/30min"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => posthog.capture("hero_book_call_clicked", { location: "hero" })}
+            onClick={() => captureIfConsented("hero_book_call_clicked", { location: "hero" })}
             className="rounded-lg bg-accent px-7 py-3 text-[15px] font-semibold text-[#04181d] shadow-[0_8px_30px_-8px_rgba(34,211,238,0.45)] transition-all duration-200 hover:bg-accent-soft hover:shadow-[0_8px_36px_-6px_rgba(34,211,238,0.55)]"
           >
             Book a demo
@@ -103,28 +103,19 @@ export default function Hero() {
           <TryBetaButton location="hero" />
         </motion.div>
 
-        {/* Product demo */}
         <motion.div variants={fadeUp} className="w-full">
           <ProductDemo />
         </motion.div>
 
-        {/* Proof strip */}
         <motion.div
           variants={fadeUp}
-          className="mt-14 grid w-full max-w-[640px] grid-cols-3 gap-6 border-t border-line pt-8"
+          className="mt-8 flex w-full max-w-[680px] flex-col items-center gap-3 rounded-xl border border-line bg-panel/45 px-5 py-4 text-[13px] text-faint sm:flex-row sm:justify-center sm:gap-5"
         >
-          {[
-            { value: "24/7", label: "Always available" },
-            { value: "4+", label: "Sources ingested live" },
-            { value: "Zero", label: "Data leakage by design" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-[22px] font-semibold tracking-[-0.01em] text-ink">
-                {stat.value}
-              </div>
-              <div className="mt-1 text-[12.5px] text-faint">{stat.label}</div>
-            </div>
-          ))}
+          <span className="text-body">Connect Slack, GitHub, and docs.</span>
+          <span className="hidden h-1 w-1 rounded-full bg-line-strong sm:block" />
+          <span>Ask in the tools your team already uses.</span>
+          <span className="hidden h-1 w-1 rounded-full bg-line-strong sm:block" />
+          <span>Get a sourced answer in seconds.</span>
         </motion.div>
       </motion.div>
     </section>
