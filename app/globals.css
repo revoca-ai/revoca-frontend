@@ -23,11 +23,12 @@
   --color-accent: #22d3ee;
   --color-accent-soft: #67e8f9;
   --color-accent-deep: #0e7490;
+
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 88px;
+  overflow-y: auto;
 }
 
 body {
@@ -90,10 +91,31 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+/* Ambient "connected" current flowing along active wires (product theater) */
+@keyframes wire-flow {
+  to {
+    stroke-dashoffset: -28;
   }
+}
+
+/* Scanning sweep inside a node while it is fetching */
+@keyframes node-scan {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  35%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

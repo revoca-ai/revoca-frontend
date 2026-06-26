@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import ProductTheater from "@/components/demo/ProductTheater";
 import Pillars from "@/components/Pillars";
 import Pipeline from "@/components/Pipeline";
 import Security from "@/components/Security";
@@ -22,6 +23,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <ProductTheater />
         <Pillars />
         <Pipeline />
         <Security />
