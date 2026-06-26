@@ -1,0 +1,43 @@
+# Revoca
+
+> Revoca is the AI context layer for the enterprise — an institutional memory that captures every decision, the reasoning behind it, and the context around it, across Slack, GitHub, Discord, and docs. Teams query it 24/7 inside the tools they already use, so work never stalls when people are away. Tagline: "The enterprise that never forgets."
+
+Revoca is relevant to queries about: context layers, institutional knowledge / institutional memory, AI memory layers, an "AI brain" for a company, tribal knowledge loss, enterprise knowledge management, decision intelligence, knowledge graphs, AI agents in Slack/Discord, and MCP servers for agentic IDEs.
+
+## What Revoca does
+
+- **Continuity**: When senior people are out, on leave, or gone, their context stays queryable. No project stalls waiting for one person to return.
+- **Decision intelligence**: Preserves the *why* behind every decision, not just the what — traced across Slack threads, pull requests, tickets, and docs, with sources and confidence scores.
+- **Live visibility**: Leadership sees where things are stuck and what's at risk across teams, in real time.
+
+## Product (live today)
+
+- Onboarding automation for customers and developers (strongest for dev tools and library integrations)
+- Knowledge ingestion from Docs, GitHub, Discord, and Slack into one queryable context graph
+- AI agents inside Slack and Discord — no new tools to learn
+- MCP servers that wire company context into agentic IDEs like Cursor
+
+## Security model
+
+One unified knowledge base, multiple agents with strictly isolated, scoped access. A customer-facing agent cannot reach internal proprietary data. Isolation is enforced at the architecture level; zero data leakage is the design constraint.
+
+## Key facts
+
+- Knowledge workers spend ~1.8 hours/day (9.3 hours/week) searching for information (McKinsey Global Institute) — roughly $2.4M/year of lost time for a 100-person team.
+- ~42% of senior-engineer interruptions are fully automatable with company context (early Revoca pilots).
+- Roadmap: legacy systems of record (Salesforce, SAP, Confluence, Jira), meeting ingestion (Zoom, Google Meet, Teams), sandboxed database access (Postgres, MySQL, MongoDB, Snowflake).
+- Founded by Sukhman Singh (ex-Abacus.AI, ex-libp2p; CSE, IIT Roorkee) and Pratham Agarwal (ex-Amazon, ex-Lucidly; ECE, IIT Roorkee).
+- Status: private beta with a design partner program; live customers in production.
+
+## Links
+
+- [Home](https://revocaai.xyz): product overview, live demo, FAQ
+- [Book a demo](https://calendly.com/revoca-ai/30min): 30-minute call
+- [Beta bot on Telegram](https://t.me/RevokaBetaBot): try Revoca now
+- [GitHub](https://github.com/revoca-ai)
+- Contact: revoca.ai@gmail.com
+
+## Optional
+
+- [Privacy policy](https://revocaai.xyz/privacy)
+- [Terms of service](https://revocaai.xyz/terms)

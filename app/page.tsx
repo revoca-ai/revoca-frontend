@@ -1,33 +1,36 @@
-import BorderFrame from "@/components/BorderFrame";
-import SideElements from "@/components/SideElements";
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import ProductTheater from "@/components/demo/ProductTheater";
 import Pillars from "@/components/Pillars";
 import Pipeline from "@/components/Pipeline";
-import Offer from "@/components/Offer";
-import BotShowcase from "@/components/BotShowcase";
-import Connectors from "@/components/Connectors";
-import Roadmap from "@/components/Roadmap";
+import Security from "@/components/Security";
+import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
-import FullPageScroll from "@/components/FullPageScroll";
+import Footer from "@/components/Footer";
+import StructuredData from "@/components/StructuredData";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Home() {
   return (
     <>
-      <FullPageScroll />
-      <BorderFrame />
-      <SideElements />
+      <StructuredData />
       <Nav />
       <main>
         <Hero />
+        <ProductTheater />
         <Pillars />
         <Pipeline />
-        <BotShowcase />
-        <Offer />
-        <Connectors />
-        <Roadmap />
+        <Security />
+        <FAQ />
         <CTA />
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,80 +1,126 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-schibsted);
+  --font-serif: var(--font-instrument);
   --font-mono: var(--font-jetbrains);
+
+  /* Surfaces */
+  --color-canvas: #0a0d10;
+  --color-panel: #0e1318;
+  --color-raise: #131a21;
+
+  /* Text */
+  --color-ink: #f2f6f8;
+  --color-body: #9aa7b2;
+  --color-faint: #5d6b77;
+
+  /* Lines */
+  --color-line: rgba(151, 168, 184, 0.13);
+  --color-line-strong: rgba(151, 168, 184, 0.24);
+
+  /* Accent */
+  --color-accent: #22d3ee;
+  --color-accent-soft: #67e8f9;
+  --color-accent-deep: #0e7490;
+
 }
 
-body {
-  background: #050505;
-  color: #888;
-  font-family: var(--font-sans), -apple-system, system-ui, sans-serif;
-}
-
-/* Border frame animations */
-@keyframes border-slide {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-@keyframes dot-travel {
-  0% { top: -60px; opacity: 0; }
-  5% { opacity: 1; }
-  95% { opacity: 1; }
-  100% { top: calc(100vh + 10px); opacity: 0; }
-}
-
-/* Typing cursor blink */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* Gradient text shimmer */
-@keyframes shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Logo static fallback rotation */
-@keyframes logo-spin {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-/* Pulse ring */
-@keyframes pulse-ring {
-  0% { transform: scale(0.85); opacity: 0.7; }
-  80%, 100% { transform: scale(1.4); opacity: 0; }
-}
-
-/* Tile reveal sweep */
-@keyframes tile-sweep {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Full-page JS-driven scroll — desktop only; mobile scrolls natively */
 html {
-  overflow-x: hidden;
+  scroll-padding-top: 88px;
+  overflow-y: auto;
 }
 
 body {
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-sans), -apple-system, system-ui, sans-serif;
+  font-feature-settings: "ss01" on, "cv01" on;
+  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-@media (min-width: 1024px) {
-  html {
-    overflow-y: hidden;
-  }
+::selection {
+  background: rgba(34, 211, 238, 0.22);
+  color: #fff;
+}
 
-  body {
-    overflow-y: hidden;
+/* Subtle scrollbar that matches the canvas */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: #1d242c;
+  border-radius: 5px;
+  border: 2px solid var(--color-canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a333d;
+}
+
+/* Typing cursor blink (product demo) */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }
 
-/* Selection color */
-::selection {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+.atmosphere-grain {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1.5px);
+  background-size: 120px 120px, 170px 170px, 230px 230px;
+}
+
+/* Soft pulse for live status dots */
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Ambient "connected" current flowing along active wires (product theater) */
+@keyframes wire-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+/* Scanning sweep inside a node while it is fetching */
+@keyframes node-scan {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  35%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
